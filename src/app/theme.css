@@ -491,3 +491,20 @@
     font-size: 0.95rem;
   }
 }
+
+/* Mobile top bar: the email/phone crowded the language + theme toggles.
+   Drop the contact text on small screens (it lives in the header, footer and
+   contact page) and keep a clean, well-spaced EN | 中文 | theme row. */
+@media (max-width: 680px) {
+  .topbar__inner {
+    padding: 0 16px;
+  }
+  .topbar__left {
+    display: none;
+  }
+  .topbar__right {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+}
