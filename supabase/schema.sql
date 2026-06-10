@@ -203,6 +203,22 @@ create policy "site_scripts_public_read"
   on public.site_scripts for select using (enabled = true);
 
 -- ============================================================
+-- NEWSLETTER SUBSCRIBERS (public signup form)
+-- ============================================================
+create table if not exists public.newsletter_subscribers (
+  id          bigserial primary key,
+  email       text not null unique,
+  language    text default 'en',
+  status      text default 'subscribed',   -- subscribed | unsubscribed
+  created_at  timestamptz default now()
+);
+
+create index if not exists idx_newsletter_created_at on public.newsletter_subscribers (created_at desc);
+
+alter table public.newsletter_subscribers enable row level security;
+-- No public read. Inserts handled by the service role via /api/newsletter.
+
+-- ============================================================
 -- STORAGE
 -- Create a PUBLIC bucket named "images" via the Supabase dashboard
 -- (Storage → New bucket → name: images → Public). Used by /api/admin/upload.

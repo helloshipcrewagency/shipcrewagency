@@ -438,6 +438,20 @@ export interface Dictionary {
     ctaText: string;
   };
 
+  newsletter: {
+    badge: string;
+    titleLead: string;
+    titleEmphasis: string;
+    sub: string;
+    placeholder: string;
+    cta: string;
+    submitting: string;
+    success: string;
+    error: string;
+    pills: string[];
+    fine: string;
+  };
+
   notFound: {
     title: string;
     text: string;

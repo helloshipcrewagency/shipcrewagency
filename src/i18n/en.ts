@@ -1261,6 +1261,20 @@ export const en: Dictionary = {
       "Share your crew requirement and our specialists will respond quickly with qualified, fully compliant seafarers.",
   },
 
+  newsletter: {
+    badge: "Newsletter",
+    titleLead: "Stay Connected for",
+    titleEmphasis: "Maritime Updates",
+    sub: "Get news on new services, crew availability and compliance updates delivered to your inbox first — no spam, ever.",
+    placeholder: "you@example.com",
+    cta: "Subscribe",
+    submitting: "Subscribing…",
+    success: "You're subscribed — welcome aboard!",
+    error: "Something went wrong. Please try again.",
+    pills: ["Industry Insights", "Crew Updates", "Compliance News"],
+    fine: "By subscribing you agree to our Privacy Policy.",
+  },
+
   notFound: {
     title: "Page Not Found",
     text: "The page you are looking for has set sail. Let us guide you back to port.",

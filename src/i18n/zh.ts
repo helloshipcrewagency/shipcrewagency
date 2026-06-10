@@ -1260,6 +1260,20 @@ export const zh: Dictionary = {
     ctaText: "告诉我们您的船员需求，我们的专家将迅速回复合格、完全合规的海员。",
   },
 
+  newsletter: {
+    badge: "订阅资讯",
+    titleLead: "及时获取",
+    titleEmphasis: "海事资讯",
+    sub: "第一时间将新服务、船员动态与合规资讯送达您的邮箱 —— 绝无垃圾邮件。",
+    placeholder: "you@example.com",
+    cta: "订阅",
+    submitting: "提交中…",
+    success: "订阅成功 —— 欢迎登船！",
+    error: "出了点问题，请重试。",
+    pills: ["行业洞察", "船员动态", "合规资讯"],
+    fine: "订阅即表示您同意我们的隐私政策。",
+  },
+
   notFound: {
     title: "页面未找到",
     text: "您所寻找的页面已扬帆远航。让我们引领您返回港湾。",
