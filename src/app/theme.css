@@ -526,3 +526,13 @@
   white-space: normal;
   text-align: center;
 }
+
+/* The dark emergency-call CTA should stay on a SINGLE line — shrink the label
+   a touch so the longer English wording fits the narrow sidebar without wrapping. */
+.sidebar-card--dark .btn {
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 12px 12px;
+  gap: 6px;
+}
