@@ -1052,6 +1052,9 @@ section {
   align-items: center;
   gap: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
 }
 .qr-card:hover {
   transform: translateY(-5px);
@@ -1072,11 +1075,76 @@ section {
   display: block;
 }
 .qr-card__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--brand-600);
+}
+
+/* QR enlarge lightbox */
+.qr-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(7, 27, 30, 0.86);
+  animation: qrFade 0.2s ease;
+}
+@keyframes qrFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.qr-lightbox__inner {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 92vw;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.qr-lightbox__img {
+  width: min(440px, 78vw);
+  height: auto;
+  border-radius: 8px;
+}
+.qr-lightbox__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-700);
+}
+.qr-lightbox__close {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  line-height: 1;
+  color: #9aa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.qr-lightbox__close:hover {
+  color: #334;
 }
 
 /* ===================== NEWSLETTER ===================== */
