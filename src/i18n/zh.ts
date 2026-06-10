@@ -34,6 +34,7 @@ export const zh: Dictionary = {
       to: "about",
       children: [
         { label: "公司简介", to: "about" },
+        { label: "我们的团队", to: "team" },
         { label: "选择我们的理由", to: "why-us" },
         { label: "合规与安全", to: "compliance" },
         { label: "服务流程", to: "process" },
@@ -97,6 +98,7 @@ export const zh: Dictionary = {
     ],
     company: [
       { label: "公司简介", to: "about" },
+      { label: "我们的团队", to: "team" },
       { label: "选择我们的理由", to: "why-us" },
       { label: "合规与安全", to: "compliance" },
       { label: "服务流程", to: "process" },
@@ -1228,6 +1230,28 @@ export const zh: Dictionary = {
       "如需紧急换员及 7×24 小时应急服务，请直接联系我们的专家。我们的响应团队全天候运转。",
     emergencyCta: "立即致电专家",
     mapTitle: "在地图上找到我们",
+  },
+
+  team: {
+    metaTitle: "我们的领导团队 — 环球船员管理",
+    metaDescription:
+      "认识环球船员管理背后的领导团队 — 经验丰富的海事专业人士，引领我们的全球船员配备与海员招聘服务。",
+    breadcrumb: "我们的团队",
+    title: "认识我们的领导团队",
+    sub: "引领环球船员管理的资深海事专业人士，是我们每一次全球派员的坚实后盾。",
+    tag: "我们的团队",
+    sectionTitle: "领导与管理层",
+    sectionText:
+      "数十年海事、配员与管理的综合专业经验 — 致力于为每一艘船舶、每一次航程提供合规、可靠的配员服务。",
+    roles: [
+      "董事长",
+      "常务董事",
+      "董事兼管理代表",
+      "运营经理",
+      "会计",
+    ],
+    ctaTitle: "与懂海的团队携手",
+    ctaText: "告诉我们您的船员需求，我们的专家将迅速回复合格、完全合规的海员。",
   },
 
   notFound: {

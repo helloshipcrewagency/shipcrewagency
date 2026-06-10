@@ -989,3 +989,46 @@ section {
     aspect-ratio: 4 / 5;
   }
 }
+
+/* ===================== TEAM / LEADERSHIP ===================== */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 26px;
+  margin-top: 14px;
+}
+.team-card {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 48px rgba(7, 52, 58, 0.16);
+}
+.team-card__photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--brand-900);
+}
+.team-card__body {
+  padding: 20px 14px 24px;
+}
+.team-card__name {
+  font-size: 1.06rem;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+.team-card__role {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brand-600);
+}

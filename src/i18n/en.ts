@@ -34,6 +34,7 @@ export const en: Dictionary = {
       to: "about",
       children: [
         { label: "About Us", to: "about" },
+        { label: "Our Team", to: "team" },
         { label: "Why Choose Us", to: "why-us" },
         { label: "Compliance & Safety", to: "compliance" },
         { label: "Our Process", to: "process" },
@@ -97,6 +98,7 @@ export const en: Dictionary = {
     ],
     company: [
       { label: "About Us", to: "about" },
+      { label: "Our Team", to: "team" },
       { label: "Why Choose Us", to: "why-us" },
       { label: "Compliance & Safety", to: "compliance" },
       { label: "Our Process", to: "process" },
@@ -1228,6 +1230,29 @@ export const en: Dictionary = {
       "For urgent crew replacements and 24/7 emergency requirements, contact our specialists directly. Our response team is operational around the clock.",
     emergencyCta: "Call Our Specialists Now",
     mapTitle: "Find Us on the Map",
+  },
+
+  team: {
+    metaTitle: "Our Leadership Team — Ship Crew Agency",
+    metaDescription:
+      "Meet the leadership team behind Ship Crew Agency — experienced maritime professionals guiding our global ship crew manning and seafarer recruitment services.",
+    breadcrumb: "Our Team",
+    title: "Meet Our Leadership Team",
+    sub: "The experienced maritime professionals who lead Ship Crew Agency and stand behind every seafarer we deploy worldwide.",
+    tag: "Our People",
+    sectionTitle: "Leadership & Management",
+    sectionText:
+      "Decades of combined maritime, manning and management expertise — committed to compliant, reliable crewing for every vessel and every voyage.",
+    roles: [
+      "Chairman",
+      "Managing Director",
+      "Director & Management Representative",
+      "Manager, Operations",
+      "Accountant",
+    ],
+    ctaTitle: "Work With a Team That Knows the Sea",
+    ctaText:
+      "Share your crew requirement and our specialists will respond quickly with qualified, fully compliant seafarers.",
   },
 
   notFound: {

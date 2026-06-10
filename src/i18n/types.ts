@@ -418,6 +418,20 @@ export interface Dictionary {
   };
 
   // -------- legal / not found --------
+  team: {
+    metaTitle: string;
+    metaDescription: string;
+    breadcrumb: string;
+    title: string;
+    sub: string;
+    tag: string;
+    sectionTitle: string;
+    sectionText: string;
+    roles: string[];
+    ctaTitle: string;
+    ctaText: string;
+  };
+
   notFound: {
     title: string;
     text: string;

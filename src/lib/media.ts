@@ -49,3 +49,13 @@ export const BLOG_IMAGES: Record<string, string> = {
   "seafarer-welfare-mental-health": "/images/crew-06.webp",
   "future-fuels-crew-training": "/images/m-03.webp",
 };
+
+// Leadership team — photo + name. Names are proper nouns (identical in every
+// language); the designation/role is translated in the dictionary, same order.
+export const TEAM = [
+  { img: "/images/team-salahuddin-ahmed.webp", name: "Captain Salahuddin Ahmed" },
+  { img: "/images/team-atikur-rahman.webp", name: "Atikur Rahman" },
+  { img: "/images/team-taslima-sultana.webp", name: "Taslima Khanam Sultana" },
+  { img: "/images/team-shamimul-hoque.webp", name: "Md. Shamimul Hoque" },
+  { img: "/images/team-mizanur-rahman.webp", name: "Mizanur Rahman" },
+];
