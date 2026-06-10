@@ -7,6 +7,16 @@ import type { Dictionary } from "@/i18n/types";
 
 const LEGAL_SLUGS = ["legal/privacy", "legal/terms", "legal/cookies"];
 
+// Real social profiles (shared across both language editions).
+const SOCIALS: { icon: string; label: string; href: string }[] = [
+  { icon: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/taslimakhanamsultana/" },
+  { icon: "facebook", label: "Facebook", href: "https://www.facebook.com/TaslimaKhanamSultana/" },
+  { icon: "users", label: "Facebook Group", href: "https://www.facebook.com/groups/995918854535351/" },
+  { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/sultana_cssl/" },
+  { icon: "twitter", label: "X (Twitter)", href: "https://x.com/mis_sultana" },
+  { icon: "telegram", label: "Telegram", href: "https://t.me/shipcrewagency" },
+];
+
 export function Footer({ lang, dict }: { lang: Lang; dict: Dictionary }) {
   const f = dict.footer;
   return (
@@ -34,15 +44,17 @@ export function Footer({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               ))}
             </div>
             <div className="footer__socials">
-              {["linkedin", "facebook", "twitter"].map((s) => (
+              {SOCIALS.map((s) => (
                 <a
-                  key={s}
+                  key={s.label}
                   className="footer__social"
-                  href="#"
-                  aria-label={s}
+                  href={s.href}
+                  aria-label={s.label}
+                  title={s.label}
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icon name={s} />
+                  <Icon name={s.icon} />
                 </a>
               ))}
             </div>

@@ -86,16 +86,6 @@ export function HomePage({ lang }: { lang: Lang }) {
               </Button>
             </div>
           </Reveal>
-          <Reveal delay={0.25}>
-            <div className="hero__stats">
-              {h.hero.stats.map((s) => (
-                <div key={s.label}>
-                  <span className="hero__stat-num">{s.value}</span>
-                  <span className="hero__stat-label">{s.label}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
         </div>
       </section>
 
