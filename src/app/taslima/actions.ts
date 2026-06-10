@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "@/lib/auth/session";
-import { verifyCredentials, getAdminEmail } from "@/lib/auth/credentials";
+import { verifyCredentials } from "@/lib/auth/credentials";
 
 export interface LoginState {
   error?: string;
@@ -24,7 +24,7 @@ export async function loginAction(
     return { error: "Invalid email or password.", email };
   }
 
-  await createSession({ userId: "admin", email: getAdminEmail() });
+  await createSession({ userId: "admin", email: email.toLowerCase().trim() });
   redirect("/admin");
 }
 

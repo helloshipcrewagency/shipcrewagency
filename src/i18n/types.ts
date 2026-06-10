@@ -415,6 +415,12 @@ export interface Dictionary {
     emergencyText: string;
     emergencyCta: string;
     mapTitle: string;
+    qr: {
+      tag: string;
+      title: string;
+      text: string;
+      items: string[];
+    };
   };
 
   // -------- legal / not found --------

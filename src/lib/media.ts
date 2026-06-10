@@ -59,3 +59,10 @@ export const TEAM = [
   { img: "/images/team-shamimul-hoque.webp", name: "Md. Shamimul Hoque" },
   { img: "/images/team-mizanur-rahman.webp", name: "Mizanur Rahman" },
 ];
+
+// Contact QR codes — scan to message our specialists. Order matches contact.qr.items.
+export const QR_CODES = [
+  "/images/qr-whatsapp.webp",
+  "/images/qr-wechat.webp",
+  "/images/qr-dingtalk.webp",
+];

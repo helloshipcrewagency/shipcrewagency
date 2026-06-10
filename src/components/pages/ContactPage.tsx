@@ -1,9 +1,12 @@
+import Image from "next/image";
 import { Reveal } from "@/components/fx/Reveal";
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Icon, type IconName } from "@/components/icons";
 import { ContactForm } from "@/components/pages/ContactForm";
 import { COMPANY, companyMapEmbed } from "@/lib/company";
+import { QR_CODES } from "@/lib/media";
 import { getDict, type Lang } from "@/i18n";
 
 const INFO_ICONS: IconName[] = ["mail", "phone", "map-pin", "file"];
@@ -26,6 +29,24 @@ export function ContactPage({ lang }: { lang: Lang }) {
         title={c.title}
         sub={c.sub}
       />
+
+      <section className="content-block" style={{ paddingBottom: 0 }}>
+        <div className="container">
+          <SectionHeader tag={c.qr.tag} title={c.qr.title} text={c.qr.text} />
+          <Reveal>
+            <div className="qr-grid">
+              {QR_CODES.map((src, i) => (
+                <div className="qr-card" key={src}>
+                  <div className="qr-card__img">
+                    <Image src={src} alt={c.qr.items[i]} width={170} height={170} />
+                  </div>
+                  <span className="qr-card__label">{c.qr.items[i]}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       <section className="content-block">
         <div className="container">

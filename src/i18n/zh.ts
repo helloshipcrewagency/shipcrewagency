@@ -1230,6 +1230,12 @@ export const zh: Dictionary = {
       "如需紧急换员及 7×24 小时应急服务，请直接联系我们的专家。我们的响应团队全天候运转。",
     emergencyCta: "立即致电专家",
     mapTitle: "在地图上找到我们",
+    qr: {
+      tag: "快速联系",
+      title: "扫码即时联系",
+      text: "用手机扫描二维码，直接与我们的配员专家沟通。",
+      items: ["WhatsApp", "微信", "钉钉"],
+    },
   },
 
   team: {

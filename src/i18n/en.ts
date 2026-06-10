@@ -1230,6 +1230,12 @@ export const en: Dictionary = {
       "For urgent crew replacements and 24/7 emergency requirements, contact our specialists directly. Our response team is operational around the clock.",
     emergencyCta: "Call Our Specialists Now",
     mapTitle: "Find Us on the Map",
+    qr: {
+      tag: "Quick Connect",
+      title: "Scan to Connect Instantly",
+      text: "Scan a code with your phone to message our crewing specialists directly.",
+      items: ["WhatsApp", "WeChat", "DingTalk"],
+    },
   },
 
   team: {
