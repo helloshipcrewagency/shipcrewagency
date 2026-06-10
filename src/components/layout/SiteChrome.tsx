@@ -4,6 +4,7 @@ import { ScrollProgress } from "@/components/fx/ScrollProgress";
 import { SiteHeader } from "./SiteHeader";
 import { PreFooterCta } from "./PreFooterCta";
 import { Footer } from "./Footer";
+import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 import { FloatingActions } from "./FloatingActions";
 import { ServiceWorkerRegister } from "./ServiceWorkerRegister";
 import { getDict, type Lang } from "@/i18n";
@@ -46,6 +47,7 @@ export function SiteChrome({
       <ScrollProgress />
       <SiteHeader lang={lang} dict={dict} />
       <main id="main-content">{children}</main>
+      <NewsletterSignup lang={lang} />
       <PreFooterCta lang={lang} />
       <Footer lang={lang} dict={dict} />
       <FloatingActions lang={lang} />

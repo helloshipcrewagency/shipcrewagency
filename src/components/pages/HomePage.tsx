@@ -4,7 +4,6 @@ import { Typewriter } from "@/components/fx/Typewriter";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
-import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 import { LocalizedLink } from "@/components/ui/LocalizedLink";
 import { Icon, type IconName } from "@/components/icons";
 import { SERVICE_SLUGS, CATEGORY_SLUGS, type Lang } from "@/i18n";
@@ -415,9 +414,6 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </div>
       </section>
-
-      {/* ===================== NEWSLETTER ===================== */}
-      <NewsletterSignup lang={lang} />
 
       {/* ===================== FINAL CTA ===================== */}
       <section className="final-cta">

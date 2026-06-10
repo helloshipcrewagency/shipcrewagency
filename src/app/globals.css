@@ -1181,6 +1181,16 @@ section {
   line-height: 1.08;
   margin: 0 0 16px;
 }
+/* The newsletter sits on a light surface, so the emphasised word uses a gold
+   gradient — the default cyan/white shimmer would be invisible on white. */
+.newsletter__title .shimmer {
+  background-image: linear-gradient(
+    100deg,
+    #d68a1c 18%,
+    #f0a93b 50%,
+    #d68a1c 82%
+  );
+}
 .newsletter__sub {
   max-width: 560px;
   margin: 0 auto 32px;
