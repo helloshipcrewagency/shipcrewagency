@@ -34,7 +34,6 @@ export const en: Dictionary = {
       to: "about",
       children: [
         { label: "About Us", to: "about" },
-        { label: "Our Team", to: "team" },
         { label: "Why Choose Us", to: "why-us" },
         { label: "Compliance & Safety", to: "compliance" },
         { label: "Our Process", to: "process" },
@@ -71,6 +70,7 @@ export const en: Dictionary = {
         { label: "FAQ", to: "faq" },
       ],
     },
+    { label: "Team", to: "team" },
     { label: "Contact", to: "contact" },
   ],
 

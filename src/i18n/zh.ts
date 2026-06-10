@@ -34,7 +34,6 @@ export const zh: Dictionary = {
       to: "about",
       children: [
         { label: "公司简介", to: "about" },
-        { label: "我们的团队", to: "team" },
         { label: "选择我们的理由", to: "why-us" },
         { label: "合规与安全", to: "compliance" },
         { label: "服务流程", to: "process" },
@@ -71,6 +70,7 @@ export const zh: Dictionary = {
         { label: "常见问题", to: "faq" },
       ],
     },
+    { label: "团队", to: "team" },
     { label: "联系我们", to: "contact" },
   ],
 
