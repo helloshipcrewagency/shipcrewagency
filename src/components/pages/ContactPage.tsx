@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { Icon, type IconName } from "@/components/icons";
 import { ContactForm } from "@/components/pages/ContactForm";
-import { COMPANY, COMPANY_MAP_EMBED } from "@/lib/company";
+import { COMPANY, companyMapEmbed } from "@/lib/company";
 import { getDict, type Lang } from "@/i18n";
 
 const INFO_ICONS: IconName[] = ["mail", "phone", "map-pin", "file"];
@@ -76,7 +76,7 @@ export function ContactPage({ lang }: { lang: Lang }) {
             <h2 className="contact-map__title">{c.mapTitle}</h2>
             <div className="contact-map__frame">
               <iframe
-                src={COMPANY_MAP_EMBED}
+                src={companyMapEmbed(lang)}
                 title={c.mapTitle}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

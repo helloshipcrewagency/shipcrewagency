@@ -13,15 +13,20 @@ export const COMPANY = {
   emails: ["crewing.cssl@gmail.com", "info@shipcrewagency.com"],
   /** primary number for one-tap "call us" / "speak with a specialist" buttons */
   callTel: "+8801626366030",
+  /** WhatsApp number in wa.me form — country code + number, digits only */
+  whatsapp: "8801626366030",
 };
 
-const MAP_QUERY =
-  "Kazi Plaza, 517/A S.K Mujib Road, Chattogram 4100, Bangladesh";
+// Exact office coordinates — Compass Shipping Service Limited, Chattogram.
+const MAP_LAT = "22.3358863";
+const MAP_LNG = "91.8126155";
 
-/** Keyless Google Maps embed — renders in an <iframe> with no API key. */
-export const COMPANY_MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(
-  MAP_QUERY,
-)}&z=16&output=embed`;
+/** Keyless Google Maps embed (no API key). Labels follow the page language. */
+export function companyMapEmbed(lang: "en" | "zh"): string {
+  const hl = lang === "zh" ? "zh-CN" : "en";
+  return `https://www.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=16&hl=${hl}&output=embed`;
+}
 
-/** The client's shared Google Maps place link (opens the full map in a new tab). */
-export const COMPANY_MAP_LINK = "https://share.google/Fb7EKrkgJG5LOvogY";
+/** Full Google Maps place link (opens the office in a new tab). */
+export const COMPANY_MAP_LINK =
+  "https://www.google.com/maps/place/Compass+Shipping+Service+Limited/@22.3358863,91.8126155,17z";

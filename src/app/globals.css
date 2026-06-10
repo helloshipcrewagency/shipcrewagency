@@ -830,6 +830,18 @@ section {
   color: rgba(255, 255, 255, 0.65);
   line-height: 1.5;
 }
+.footer__contact-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.footer__contact-lines a {
+  color: inherit;
+  transition: color 0.2s;
+}
+.footer__contact-lines a:hover {
+  color: var(--cyan-300);
+}
 .footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 24px 0;

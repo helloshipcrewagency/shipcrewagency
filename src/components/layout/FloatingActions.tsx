@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Icon } from "@/components/icons";
+import { COMPANY } from "@/lib/company";
 import type { Lang } from "@/i18n";
-
-const DEFAULT_NUMBER = "8801700000000"; // override via NEXT_PUBLIC_WHATSAPP_NUMBER
 
 export function FloatingActions({ lang = "en" }: { lang?: Lang }) {
   const [show, setShow] = useState(false);
@@ -17,9 +16,7 @@ export function FloatingActions({ lang = "en" }: { lang?: Lang }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const number = (
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || DEFAULT_NUMBER
-  ).replace(/[^0-9]/g, "");
+  const number = COMPANY.whatsapp.replace(/[^0-9]/g, "");
   const text =
     lang === "zh"
       ? "您好，环球船员管理，我想咨询船员配备需求。"

@@ -107,17 +107,26 @@ export function Footer({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               <Icon name="map-pin" />
               <span>{COMPANY.address}</span>
             </div>
-            <a className="footer__contact-item" href={`tel:${COMPANY.callTel}`}>
+            <div className="footer__contact-item">
               <Icon name="phone" />
-              <span>{COMPANY.phones.join(" / ")}</span>
-            </a>
-            <a
-              className="footer__contact-item"
-              href={`mailto:${COMPANY.emails[0]}`}
-            >
+              <span className="footer__contact-lines">
+                {COMPANY.phones.map((p) => (
+                  <a key={p} href={`tel:${p.replace(/\s/g, "")}`}>
+                    {p}
+                  </a>
+                ))}
+              </span>
+            </div>
+            <div className="footer__contact-item">
               <Icon name="mail" />
-              <span>{COMPANY.emails.join(" / ")}</span>
-            </a>
+              <span className="footer__contact-lines">
+                {COMPANY.emails.map((e) => (
+                  <a key={e} href={`mailto:${e}`}>
+                    {e}
+                  </a>
+                ))}
+              </span>
+            </div>
             <div style={{ marginTop: 24 }}>
               <Button lang={lang} to="contact" variant="primary" full>
                 {dict.common.requestCrew}
