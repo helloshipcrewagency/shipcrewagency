@@ -24,7 +24,7 @@ export const en: Dictionary = {
 
   topbar: {
     email: "info@shipcrewagency.com",
-    emergency: "24/7 Emergency: +1 (800) SCA-CREW",
+    emergency: "24/7 Emergency: +880 1626 366030",
   },
 
   nav: [

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/fx/Reveal";
 import { Icon } from "@/components/icons";
+import { BROCHURE_URL } from "@/lib/company";
 import { getDict, type Lang } from "@/i18n";
 
 /** Two-panel call-to-action band rendered on every page, just above the
@@ -28,7 +29,7 @@ export function PreFooterCta({ lang }: { lang: Lang }) {
           </div>
           <a
             className="btn btn--secondary"
-            href="/brochure.pdf"
+            href={BROCHURE_URL}
             target="_blank"
             rel="noopener noreferrer"
           >

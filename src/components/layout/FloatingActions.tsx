@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Icon } from "@/components/icons";
-import { COMPANY } from "@/lib/company";
+import { whatsappHref } from "@/lib/company";
 import type { Lang } from "@/i18n";
 
 export function FloatingActions({ lang = "en" }: { lang?: Lang }) {
@@ -16,12 +16,7 @@ export function FloatingActions({ lang = "en" }: { lang?: Lang }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const number = COMPANY.whatsapp.replace(/[^0-9]/g, "");
-  const text =
-    lang === "zh"
-      ? "您好，环球船员管理，我想咨询船员配备需求。"
-      : "Hello Ship Crew Agency, I'd like to discuss a crew requirement.";
-  const waHref = `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  const waHref = whatsappHref(lang);
 
   return (
     <>

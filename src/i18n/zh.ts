@@ -24,7 +24,7 @@ export const zh: Dictionary = {
 
   topbar: {
     email: "info@shipcrewagency.com",
-    emergency: "7×24 小时应急热线：+1 (800) SCA-CREW",
+    emergency: "7×24 小时应急热线：+880 1626 366030",
   },
 
   nav: [

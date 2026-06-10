@@ -30,3 +30,17 @@ export function companyMapEmbed(lang: "en" | "zh"): string {
 /** Full Google Maps place link (opens the office in a new tab). */
 export const COMPANY_MAP_LINK =
   "https://www.google.com/maps/place/Compass+Shipping+Service+Limited/@22.3358863,91.8126155,17z";
+
+/** Pre-filled WhatsApp chat link (wa.me) — the message follows the page language. */
+export function whatsappHref(lang: "en" | "zh"): string {
+  const text =
+    lang === "zh"
+      ? "您好，环球船员管理，我想咨询船员配备需求。"
+      : "Hello Ship Crew Agency, I'd like to discuss a crew requirement.";
+  const num = COMPANY.whatsapp.replace(/[^0-9]/g, "");
+  return `https://wa.me/${num}?text=${encodeURIComponent(text)}`;
+}
+
+/** Company brochure — hosted on the client's Google Drive. */
+export const BROCHURE_URL =
+  "https://drive.google.com/file/d/1znu_-mH-EiXCek6uT0lpO43CYxN3kNUP/view?usp=drive_link";

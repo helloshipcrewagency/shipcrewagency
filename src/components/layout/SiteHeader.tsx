@@ -7,6 +7,7 @@ import { LocalizedLink } from "@/components/ui/LocalizedLink";
 import { ThemeToggle } from "@/components/fx/ThemeToggle";
 import { href as buildHref, type Lang } from "@/i18n";
 import type { Dictionary } from "@/i18n/types";
+import { COMPANY, whatsappHref } from "@/lib/company";
 import { cn } from "@/lib/utils";
 
 function LangToggle({ lang }: { lang: Lang }) {
@@ -68,10 +69,10 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               <Icon name="mail" />
               {topbar.email}
             </a>
-            <span className="topbar__item">
+            <a className="topbar__item" href={`tel:${COMPANY.callTel}`}>
               <Icon name="phone" />
               {topbar.emergency}
-            </span>
+            </a>
           </div>
           <LangToggle lang={lang} />
         </div>
@@ -126,10 +127,15 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               </div>
             ))}
             <div className="nav__item nav__cta">
-              <LocalizedLink lang={lang} to="contact" className="btn btn--primary">
+              <a
+                href={whatsappHref(lang)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--primary"
+              >
                 <Icon name="arrow-right" />
                 <span>{common.requestCrew}</span>
-              </LocalizedLink>
+              </a>
             </div>
           </nav>
 
@@ -189,13 +195,15 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
           ),
         )}
         <div className="mobile-nav__cta">
-          <Link
-            href={buildHref(lang, "contact")}
+          <a
+            href={whatsappHref(lang)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn btn--primary"
             style={{ width: "100%", justifyContent: "center" }}
           >
             {common.requestCrew}
-          </Link>
+          </a>
         </div>
       </div>
     </>
