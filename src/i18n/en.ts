@@ -34,6 +34,7 @@ export const en: Dictionary = {
       to: "about",
       children: [
         { label: "About Us", to: "about" },
+        { label: "Team", to: "team" },
         { label: "Why Choose Us", to: "why-us" },
         { label: "Compliance & Safety", to: "compliance" },
         { label: "Our Process", to: "process" },
@@ -68,9 +69,18 @@ export const en: Dictionary = {
       children: [
         { label: "Maritime Blog", to: "blog" },
         { label: "FAQ", to: "faq" },
+        {
+          label: "Manning Agency Guideline",
+          to: "https://drive.google.com/file/d/1IH1FUTY34pIHueNBi68uITMh_2a9BN5_/view?usp=drive_link",
+          external: true,
+        },
+        {
+          label: "Company Profile",
+          to: "https://drive.google.com/file/d/1G-HwuDVVfVWisr7V11WklDrUysHOaIPs/view?usp=drive_link",
+          external: true,
+        },
       ],
     },
-    { label: "Team", to: "team" },
     { label: "Contact", to: "contact" },
   ],
 
@@ -98,7 +108,7 @@ export const en: Dictionary = {
     ],
     company: [
       { label: "About Us", to: "about" },
-      { label: "Our Team", to: "team" },
+      { label: "Team", to: "team" },
       { label: "Why Choose Us", to: "why-us" },
       { label: "Compliance & Safety", to: "compliance" },
       { label: "Our Process", to: "process" },
@@ -679,6 +689,14 @@ export const en: Dictionary = {
     ctaTitle: "Crew You Can Trust. Compliance You Can Verify.",
     ctaText:
       "Every seafarer we supply comes with full documentation and compliance confirmation.",
+    credentialsTag: "Verified Credentials",
+    credentialsTitle: "Our Licence & Certification",
+    credentialsText:
+      "Ship Crew Agency operates under a valid government manning licence and is certified to the Maritime Labour Convention, 2006 — verifiable documentation you can trust.",
+    credentialsItems: [
+      "Govt. Manning Licence — MLA-0108",
+      "Maritime Labour Convention (MLC 2006)",
+    ],
   },
 
   process: {

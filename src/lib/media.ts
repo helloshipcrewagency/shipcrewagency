@@ -66,3 +66,9 @@ export const QR_CODES = [
   "/images/qr-wechat.webp",
   "/images/qr-dingtalk.webp",
 ];
+
+// Compliance page — scanned licence + certificate (kept in /images/compliance).
+export const COMPLIANCE_DOCS = [
+  "/images/compliance/mla-0108-license.webp",
+  "/images/compliance/mlc-2006-certificate.webp",
+];

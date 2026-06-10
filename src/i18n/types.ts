@@ -27,6 +27,8 @@ export interface Stat {
 export interface NavChild {
   label: string;
   to: string;
+  /** when true, `to` is treated as a full external URL opened in a new tab */
+  external?: boolean;
 }
 
 export interface NavItem {
@@ -308,6 +310,10 @@ export interface Dictionary {
     certCards: CertCard[];
     ctaTitle: string;
     ctaText: string;
+    credentialsTag: string;
+    credentialsTitle: string;
+    credentialsText: string;
+    credentialsItems: string[];
   };
 
   // -------- process --------

@@ -1,6 +1,9 @@
+import Image from "next/image";
 import { Reveal } from "@/components/fx/Reveal";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CtaStrip } from "@/components/ui/CtaStrip";
+import { COMPLIANCE_DOCS } from "@/lib/media";
 import { getDict, type Lang } from "@/i18n";
 
 export function CompliancePage({ lang }: { lang: Lang }) {
@@ -66,6 +69,40 @@ export function CompliancePage({ lang }: { lang: Lang }) {
               </div>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      <section className="content-block content-block--alt">
+        <div className="container">
+          <SectionHeader
+            tag={c.credentialsTag}
+            title={c.credentialsTitle}
+            text={c.credentialsText}
+          />
+          <Reveal>
+            <div className="cred-grid">
+              {COMPLIANCE_DOCS.map((src, i) => (
+                <a
+                  className="cred-card"
+                  href={src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={src}
+                >
+                  <div className="cred-card__frame">
+                    <Image
+                      src={src}
+                      alt={c.credentialsItems[i]}
+                      fill
+                      sizes="(max-width: 760px) 100vw, 50vw"
+                      style={{ objectFit: "contain" }}
+                    />
+                  </div>
+                  <span className="cred-card__cap">{c.credentialsItems[i]}</span>
+                </a>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

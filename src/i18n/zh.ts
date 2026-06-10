@@ -34,6 +34,7 @@ export const zh: Dictionary = {
       to: "about",
       children: [
         { label: "公司简介", to: "about" },
+        { label: "团队", to: "team" },
         { label: "选择我们的理由", to: "why-us" },
         { label: "合规与安全", to: "compliance" },
         { label: "服务流程", to: "process" },
@@ -68,9 +69,18 @@ export const zh: Dictionary = {
       children: [
         { label: "海事博客", to: "blog" },
         { label: "常见问题", to: "faq" },
+        {
+          label: "配员机构指南",
+          to: "https://drive.google.com/file/d/1IH1FUTY34pIHueNBi68uITMh_2a9BN5_/view?usp=drive_link",
+          external: true,
+        },
+        {
+          label: "公司简介手册",
+          to: "https://drive.google.com/file/d/1G-HwuDVVfVWisr7V11WklDrUysHOaIPs/view?usp=drive_link",
+          external: true,
+        },
       ],
     },
-    { label: "团队", to: "team" },
     { label: "联系我们", to: "contact" },
   ],
 
@@ -98,7 +108,7 @@ export const zh: Dictionary = {
     ],
     company: [
       { label: "公司简介", to: "about" },
-      { label: "我们的团队", to: "team" },
+      { label: "团队", to: "team" },
       { label: "选择我们的理由", to: "why-us" },
       { label: "合规与安全", to: "compliance" },
       { label: "服务流程", to: "process" },
@@ -679,6 +689,14 @@ export const zh: Dictionary = {
     ctaTitle: "值得信赖的船员，可供核验的合规。",
     ctaText:
       "我们输送的每一名海员，均附有完整文件及合规确认。",
+    credentialsTag: "权威资质",
+    credentialsTitle: "我们的许可证与认证",
+    credentialsText:
+      "环球船员管理持有有效的政府船员派遣许可证，并已通过《2006 年海事劳工公约》认证 —— 真实可查的资质文件，值得信赖。",
+    credentialsItems: [
+      "政府船员派遣许可证 — MLA-0108",
+      "海事劳工公约 (MLC 2006)",
+    ],
   },
 
   process: {

@@ -106,17 +106,30 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
                       {item.wide && (
                         <div className="dropdown__col-head">{item.label}</div>
                       )}
-                      {item.children.map((c) => (
-                        <LocalizedLink
-                          key={c.to}
-                          lang={lang}
-                          to={c.to}
-                          className="dropdown__item"
-                        >
-                          <Icon name="arrow-right" />
-                          {c.label}
-                        </LocalizedLink>
-                      ))}
+                      {item.children.map((c) =>
+                        c.external ? (
+                          <a
+                            key={c.to}
+                            href={c.to}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="dropdown__item"
+                          >
+                            <Icon name="arrow-right" />
+                            {c.label}
+                          </a>
+                        ) : (
+                          <LocalizedLink
+                            key={c.to}
+                            lang={lang}
+                            to={c.to}
+                            className="dropdown__item"
+                          >
+                            <Icon name="arrow-right" />
+                            {c.label}
+                          </LocalizedLink>
+                        ),
+                      )}
                     </div>
                   </>
                 ) : (
@@ -172,15 +185,27 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
                   openSub === item.label && "open",
                 )}
               >
-                {item.children.map((c) => (
-                  <Link
-                    key={c.to}
-                    href={buildHref(lang, c.to)}
-                    className="mobile-nav__sub-link"
-                  >
-                    {c.label}
-                  </Link>
-                ))}
+                {item.children.map((c) =>
+                  c.external ? (
+                    <a
+                      key={c.to}
+                      href={c.to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mobile-nav__sub-link"
+                    >
+                      {c.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={c.to}
+                      href={buildHref(lang, c.to)}
+                      className="mobile-nav__sub-link"
+                    >
+                      {c.label}
+                    </Link>
+                  ),
+                )}
               </div>
             </div>
           ) : (
