@@ -288,7 +288,7 @@ export const body = `<div>
           <div>
             <span>调派能力状态</span>
           </div>
-          <div class="sp-stats">
+          <div class="sp-stats sp-stats--status">
             <div class="sp-stat">
               <span class="sp-stat-num">应急响应</span>
               <span class="sp-stat-label">24/7 待命</span>

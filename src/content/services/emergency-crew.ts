@@ -288,7 +288,7 @@ export const body = `<div>
           <div>
             <span>Deployment Capability Status</span>
           </div>
-          <div class="sp-stats">
+          <div class="sp-stats sp-stats--status">
             <div class="sp-stat">
               <span class="sp-stat-num">Emergency Response</span>
               <span class="sp-stat-label">Active 24/7</span>

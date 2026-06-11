@@ -1287,6 +1287,31 @@ section {
   opacity: 0.85;
   margin-top: 9px;
 }
+/* Status band whose "number" is actually a short phrase (e.g. the deployment-
+   capability cards): three per row, roomier cards, and a smaller heading so the
+   text sits inside the card instead of spilling over its edges. */
+.service-prose .sp-stats--status {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.service-prose .sp-stats--status .sp-stat {
+  padding: 30px 24px;
+}
+.service-prose .sp-stats--status .sp-stat-num {
+  font-size: 1.4rem;
+  line-height: 1.22;
+  overflow-wrap: break-word;
+}
+@media (max-width: 720px) {
+  .service-prose .sp-stats--status {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 460px) {
+  .service-prose .sp-stats--status {
+    grid-template-columns: 1fr;
+  }
+}
 /* Leading stats block — some source pages used a div/div structure the
    extractor first read as FAQ; re-skin it here into proper teal stat cards. */
 .service-prose > div:first-child .sp-faq {
@@ -1323,17 +1348,38 @@ section {
   margin: 6px 0 0;
 }
 
-/* card grids */
+/* card grids — three per row on desktop (two when the grid holds exactly two
+   cards), collapsing on smaller screens. A lone trailing card is centred. */
 .service-prose .sp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-prose .sp-grid:has(> :last-child:nth-child(2)) {
+  grid-template-columns: repeat(2, 1fr);
+}
+.service-prose .sp-grid > .sp-card:last-child:nth-child(3n - 2) {
+  grid-column: 2 / 3;
+}
+@media (max-width: 900px) {
+  .service-prose .sp-grid,
+  .service-prose .sp-grid:has(> :last-child:nth-child(2)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .service-prose .sp-grid > .sp-card:last-child:nth-child(3n - 2) {
+    grid-column: auto;
+  }
+}
+@media (max-width: 560px) {
+  .service-prose .sp-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .service-prose .sp-card {
   background: var(--white);
   border: 1px solid var(--mist);
   border-radius: 16px;
-  padding: 26px 24px;
+  padding: 30px 28px;
   box-shadow: var(--shadow-sm);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -1567,6 +1613,26 @@ section {
 @media (max-width: 640px) {
   .service-prose .sp-faq:has(> .sp-card) > .sp-faq-col {
     grid-template-columns: 1fr;
+  }
+}
+
+/* A lone last card in a two-up grid (department rosters and the Q/A content
+   sections) is centred between the two cards above it, rather than left alone. */
+.service-prose .sp-faq:has(> .sp-card) > .sp-faq-col > .sp-faq-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 8px);
+  margin-inline: auto;
+}
+.service-prose .sp-faq:has(> .sp-head) > .sp-faq-col > .sp-faq-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 11px);
+  margin-inline: auto;
+}
+@media (max-width: 640px) {
+  .service-prose .sp-faq:has(> .sp-card) > .sp-faq-col > .sp-faq-item:last-child:nth-child(odd),
+  .service-prose .sp-faq:has(> .sp-head) > .sp-faq-col > .sp-faq-item:last-child:nth-child(odd) {
+    max-width: none;
+    margin-inline: 0;
   }
 }
 .newsletter__sub {
