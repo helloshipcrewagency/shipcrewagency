@@ -1287,6 +1287,41 @@ section {
   opacity: 0.85;
   margin-top: 9px;
 }
+/* Leading stats block — some source pages used a div/div structure the
+   extractor first read as FAQ; re-skin it here into proper teal stat cards. */
+.service-prose > div:first-child .sp-faq {
+  display: contents;
+}
+.service-prose > div:first-child .sp-faq-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+}
+.service-prose > div:first-child .sp-faq-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(150deg, var(--brand-800), var(--brand-900));
+  border: none;
+  box-shadow: none;
+  border-radius: 16px;
+  padding: 26px 18px;
+}
+.service-prose > div:first-child .sp-q {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--cyan-300);
+  margin: 0;
+}
+.service-prose > div:first-child .sp-a {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.85;
+  margin: 6px 0 0;
+}
 
 /* card grids */
 .service-prose .sp-grid {
