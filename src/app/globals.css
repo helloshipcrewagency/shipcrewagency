@@ -1194,69 +1194,257 @@ section {
 
 /* ===================== SERVICE PROSE (client content, our design) ===================== */
 .service-prose {
-  max-width: 940px;
-  margin: 0 auto;
   color: var(--body);
   font-size: 1.02rem;
-  line-height: 1.78;
+  line-height: 1.75;
 }
 .service-prose h2 {
   color: var(--brand-900);
-  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-  line-height: 1.16;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.14;
   letter-spacing: -0.01em;
-  margin: 52px 0 16px;
-}
-.service-prose > section:first-child h2,
-.service-prose > div:first-child h2 {
-  margin-top: 0;
+  margin: 0 0 14px;
 }
 .service-prose h3 {
-  color: var(--brand-800);
-  font-size: 1.28rem;
-  margin: 30px 0 10px;
+  color: var(--brand-900);
+  font-size: 1.18rem;
+  margin: 0 0 10px;
 }
 .service-prose h4 {
-  color: var(--brand-800);
-  font-size: 1.08rem;
-  margin: 22px 0 8px;
+  color: var(--brand-900);
+  font-size: 1.04rem;
+  margin: 0 0 7px;
 }
 .service-prose p {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
-.service-prose ul,
-.service-prose ol {
-  margin: 0 0 18px;
-  padding-left: 24px;
-}
-.service-prose li {
-  margin-bottom: 9px;
+.service-prose p:last-child {
+  margin-bottom: 0;
 }
 .service-prose strong {
   color: var(--brand-900);
   font-weight: 700;
 }
-.service-prose a {
-  color: var(--brand-600);
-  text-decoration: underline;
+
+/* sections */
+.service-prose .sp-section {
+  padding: 48px 0;
+  border-top: 1px solid var(--mist);
 }
-.service-prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
+.service-prose .sp-section:first-of-type {
+  border-top: none;
+  padding-top: 18px;
+}
+
+/* eyebrow / tag label + section header */
+.service-prose .sp-eyebrow,
+.service-prose .sp-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan-500);
+  margin-bottom: 12px;
+}
+.service-prose .sp-head {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+.service-prose .sp-head p {
+  color: var(--text-muted, #5b6b6e);
+  font-size: 1.06rem;
+  margin-bottom: 0;
+}
+
+/* stats band */
+.service-prose .sp-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+  margin: 4px 0 6px;
+}
+.service-prose .sp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(150deg, var(--brand-800), var(--brand-900));
+  border-radius: 16px;
+  padding: 26px 18px;
+  color: #fff;
+}
+.service-prose .sp-stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--cyan-300);
+  line-height: 1;
+}
+.service-prose .sp-stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-top: 9px;
+}
+
+/* card grids */
+.service-prose .sp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+.service-prose .sp-card {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: 16px;
+  padding: 26px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.service-prose .sp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(7, 52, 58, 0.1);
+}
+.service-prose .sp-card p:last-child {
+  margin-bottom: 0;
+}
+.service-prose .sp-icon {
+  font-size: 1.9rem;
+  display: block;
+  margin-bottom: 12px;
+}
+.service-prose .sp-card .sp-tag {
+  color: var(--cyan-500);
+}
+
+/* checklist inside a card */
+.service-prose .sp-check {
+  position: relative;
+  padding-left: 26px;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--brand-800);
+}
+.service-prose .sp-check::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  color: var(--cyan-400);
+  font-weight: 800;
+}
+
+/* departments */
+.service-prose .sp-dept {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.service-prose .sp-dept-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--brand-800), var(--brand-900));
+  color: #fff;
+  padding: 16px 22px;
+}
+.service-prose .sp-dept-head h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.08rem;
+}
+.service-prose .sp-dept-head > div {
+  font-size: 1.5rem;
+}
+.service-prose .sp-dept > div:last-child {
+  padding: 16px 22px;
+}
+
+/* lists */
+.service-prose ul {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.service-prose li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 11px;
+}
+.service-prose li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan-400);
+}
+.service-prose .sp-dept li {
+  margin-bottom: 8px;
+}
+.service-prose li h4 {
+  margin: 0 0 2px;
+}
+.service-prose li p {
+  margin: 0;
+  color: var(--text-muted, #5b6b6e);
   font-size: 0.96rem;
 }
-.service-prose th,
-.service-prose td {
-  border: 1px solid var(--mist);
-  padding: 11px 15px;
-  text-align: left;
-  vertical-align: top;
+
+/* chips */
+.service-prose .sp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
 }
-.service-prose th {
-  background: var(--off-white);
-  color: var(--brand-900);
+.service-prose .sp-chip {
+  background: rgba(20, 160, 168, 0.1);
+  border: 1px solid var(--brand-400);
+  color: var(--brand-700);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* FAQ */
+.service-prose .sp-faq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.service-prose .sp-faq-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.service-prose .sp-faq-item {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+.service-prose .sp-q {
   font-weight: 700;
+  color: var(--brand-900);
+  margin-bottom: 8px;
+}
+.service-prose .sp-a {
+  color: var(--text-muted, #5b6b6e);
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+@media (max-width: 760px) {
+  .service-prose .sp-faq {
+    grid-template-columns: 1fr;
+  }
 }
 .newsletter__sub {
   max-width: 560px;
