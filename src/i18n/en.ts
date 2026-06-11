@@ -67,7 +67,7 @@ export const en: Dictionary = {
       label: "Resources",
       to: "blog",
       children: [
-        { label: "Maritime Blog", to: "blog" },
+        { label: "Maritime News", to: "blog" },
         { label: "FAQ", to: "faq" },
         {
           label: "Manning Agency Guideline",

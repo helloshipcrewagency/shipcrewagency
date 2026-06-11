@@ -67,7 +67,7 @@ export const zh: Dictionary = {
       label: "资源中心",
       to: "blog",
       children: [
-        { label: "海事博客", to: "blog" },
+        { label: "海事新闻", to: "blog" },
         { label: "常见问题", to: "faq" },
         {
           label: "配员机构指南",
