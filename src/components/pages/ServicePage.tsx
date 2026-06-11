@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { PageHero } from "@/components/ui/PageHero";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { Icon } from "@/components/icons";
-import { SERVICE_BODIES } from "@/content/services";
+import { SERVICE_BODIES, SERVICE_BODIES_ZH } from "@/content/services";
 import { getDict, type Lang } from "@/i18n";
 
 export function ServicePage({ lang, slug }: { lang: Lang; slug: string }) {
@@ -14,9 +14,9 @@ export function ServicePage({ lang, slug }: { lang: Lang; slug: string }) {
   if (!s) notFound();
 
   // Full service content extracted from the client's source pages, rendered in
-  // OUR design (typography, colour, spacing). The Chinese edition keeps its own
-  // structured copy until that content is translated.
-  const body = lang === "en" ? SERVICE_BODIES[slug] : undefined;
+  // OUR design (typography, colour, spacing). Each language has its own fully
+  // localised body — no cross-language text leak.
+  const body = lang === "en" ? SERVICE_BODIES[slug] : SERVICE_BODIES_ZH[slug];
 
   return (
     <>

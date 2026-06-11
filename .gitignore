@@ -41,6 +41,4 @@ yarn-error.log*
 # local tooling / logs (not for the repo)
 .claude/
 /launch.json
-/server.log
-/build.log
-/build2.log
+*.log

@@ -1519,6 +1519,56 @@ section {
     grid-template-columns: 1fr;
   }
 }
+
+/* Department-roster sections: each department is a .sp-faq whose first child is
+   a .sp-card (the department header) followed by a .sp-faq-col of role cards.
+   Lay the header out as a full-width teal banner above a two-up grid of role
+   cards, instead of the narrow header | single-column-of-roles split. */
+.service-prose .sp-faq:has(> .sp-card) {
+  display: block;
+  margin-bottom: 26px;
+}
+.service-prose .sp-faq:has(> .sp-card):last-child {
+  margin-bottom: 0;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--brand-800), var(--brand-900));
+  border: none;
+  box-shadow: none;
+  padding: 15px 24px;
+  margin-bottom: 18px;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-card h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.12rem;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-card .sp-check {
+  margin: 0;
+  padding-left: 0;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-card .sp-check::before {
+  content: none;
+}
+.service-prose .sp-faq:has(> .sp-card) > .sp-faq-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 640px) {
+  .service-prose .sp-faq:has(> .sp-card) > .sp-faq-col {
+    grid-template-columns: 1fr;
+  }
+}
 .newsletter__sub {
   max-width: 560px;
   margin: 0 auto 32px;
