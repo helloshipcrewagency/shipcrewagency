@@ -16,6 +16,7 @@ const SOCIALS: { icon: string; label: string; href: string }[] = [
   { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/sultana_cssl/" },
   { icon: "twitter", label: "X (Twitter)", href: "https://x.com/mis_sultana" },
   { icon: "telegram", label: "Telegram", href: "https://t.me/shipcrewagency" },
+  { icon: "youtube", label: "YouTube", href: "https://www.youtube.com/@ShipCrewAgency" },
 ];
 
 export function Footer({ lang, dict }: { lang: Lang; dict: Dictionary }) {

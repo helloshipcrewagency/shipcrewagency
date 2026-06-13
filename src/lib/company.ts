@@ -43,6 +43,16 @@ export function whatsappHref(lang: "en" | "zh"): string {
   return `https://wa.me/${num}?text=${encodeURIComponent(text)}`;
 }
 
+/** Enquiry inbox used by the call-to-action buttons. */
+export const ENQUIRY_EMAIL = "helloshipcrewagency@gmail.com";
+
+/** Pre-filled mailto link — the subject follows the page language. */
+export function enquiryMailto(lang: "en" | "zh"): string {
+  const subject =
+    lang === "zh" ? "船员配备咨询" : "Crew Requirement Enquiry";
+  return `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}`;
+}
+
 /** Company brochure — hosted on the client's Google Drive. */
 export const BROCHURE_URL =
   "https://drive.google.com/file/d/1znu_-mH-EiXCek6uT0lpO43CYxN3kNUP/view?usp=drive_link";

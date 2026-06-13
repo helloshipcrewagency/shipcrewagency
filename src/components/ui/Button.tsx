@@ -14,6 +14,8 @@ interface ButtonProps {
   to?: string;
   /** explicit href (external or absolute) */
   href?: string;
+  /** open href in a new tab (adds target/rel) */
+  external?: boolean;
   icon?: IconName;
   iconRight?: IconName;
   className?: string;
@@ -26,6 +28,7 @@ export function Button({
   lang = "en",
   to,
   href,
+  external,
   icon,
   iconRight,
   className,
@@ -57,7 +60,12 @@ export function Button({
   }
   if (href) {
     return (
-      <a href={href} className={classes} style={style}>
+      <a
+        href={href}
+        className={classes}
+        style={style}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
         {inner}
       </a>
     );
