@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
+  verification: {
+    google: "UWn8WTsfedY4ZlIqyT1P54SBIpvwAalQO0GuPEcvh0E",
+  },
   openGraph: { type: "website", siteName: "Ship Crew Agency" },
 };
 
