@@ -29,6 +29,8 @@ export interface NavChild {
   to: string;
   /** when true, `to` is treated as a full external URL opened in a new tab */
   external?: boolean;
+  /** nested sub-items (custom menus can nest arbitrarily deep) */
+  children?: NavChild[];
 }
 
 export interface NavItem {

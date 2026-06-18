@@ -6,9 +6,104 @@ import { Icon, LogoMark } from "@/components/icons";
 import { LocalizedLink } from "@/components/ui/LocalizedLink";
 import { ThemeToggle } from "@/components/fx/ThemeToggle";
 import { href as buildHref, type Lang } from "@/i18n";
-import type { Dictionary } from "@/i18n/types";
+import type { Dictionary, NavChild } from "@/i18n/types";
 import { COMPANY, whatsappHref } from "@/lib/company";
 import { cn } from "@/lib/utils";
+
+// Recursive dropdown items — nested children render indented beneath their
+// parent, so a custom menu can be as deep as it likes.
+function DropdownItems({
+  items,
+  lang,
+  depth = 0,
+}: {
+  items: NavChild[];
+  lang: Lang;
+  depth?: number;
+}) {
+  return (
+    <>
+      {items.map((c, i) => {
+        const style =
+          depth > 0 ? { paddingLeft: 16 + depth * 15 } : undefined;
+        const inner = (
+          <>
+            <Icon name="arrow-right" />
+            {c.label}
+          </>
+        );
+        return (
+          <span key={`${c.to}-${i}`} style={{ display: "contents" }}>
+            {c.external ? (
+              <a
+                href={c.to}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dropdown__item"
+                style={style}
+              >
+                {inner}
+              </a>
+            ) : (
+              <Link
+                href={buildHref(lang, c.to)}
+                className="dropdown__item"
+                style={style}
+              >
+                {inner}
+              </Link>
+            )}
+            {c.children?.length ? (
+              <DropdownItems items={c.children} lang={lang} depth={depth + 1} />
+            ) : null}
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
+// Recursive mobile sub-items.
+function MobileItems({
+  items,
+  lang,
+  depth = 0,
+}: {
+  items: NavChild[];
+  lang: Lang;
+  depth?: number;
+}) {
+  return (
+    <>
+      {items.map((c, i) => (
+        <span key={`${c.to}-${i}`} style={{ display: "contents" }}>
+          {c.external ? (
+            <a
+              href={c.to}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-nav__sub-link"
+              style={depth > 0 ? { paddingLeft: 16 + depth * 14 } : undefined}
+            >
+              {c.label}
+            </a>
+          ) : (
+            <Link
+              href={buildHref(lang, c.to)}
+              className="mobile-nav__sub-link"
+              style={depth > 0 ? { paddingLeft: 16 + depth * 14 } : undefined}
+            >
+              {c.label}
+            </Link>
+          )}
+          {c.children?.length ? (
+            <MobileItems items={c.children} lang={lang} depth={depth + 1} />
+          ) : null}
+        </span>
+      ))}
+    </>
+  );
+}
 
 function LangToggle({ lang }: { lang: Lang }) {
   const pathname = usePathname() || "/";
@@ -106,30 +201,7 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
                       {item.wide && (
                         <div className="dropdown__col-head">{item.label}</div>
                       )}
-                      {item.children.map((c) =>
-                        c.external ? (
-                          <a
-                            key={c.to}
-                            href={c.to}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="dropdown__item"
-                          >
-                            <Icon name="arrow-right" />
-                            {c.label}
-                          </a>
-                        ) : (
-                          <LocalizedLink
-                            key={c.to}
-                            lang={lang}
-                            to={c.to}
-                            className="dropdown__item"
-                          >
-                            <Icon name="arrow-right" />
-                            {c.label}
-                          </LocalizedLink>
-                        ),
-                      )}
+                      <DropdownItems items={item.children} lang={lang} />
                     </div>
                   </>
                 ) : (
@@ -185,27 +257,7 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
                   openSub === item.label && "open",
                 )}
               >
-                {item.children.map((c) =>
-                  c.external ? (
-                    <a
-                      key={c.to}
-                      href={c.to}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mobile-nav__sub-link"
-                    >
-                      {c.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={c.to}
-                      href={buildHref(lang, c.to)}
-                      className="mobile-nav__sub-link"
-                    >
-                      {c.label}
-                    </Link>
-                  ),
-                )}
+                <MobileItems items={item.children} lang={lang} />
               </div>
             </div>
           ) : (

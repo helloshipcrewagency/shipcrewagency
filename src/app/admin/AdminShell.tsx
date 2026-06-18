@@ -12,8 +12,11 @@ import {
   Menu as MenuIcon,
   PanelsTopLeft,
   Code2,
+  BarChart3,
   LogOut,
   ChevronRight,
+  ChevronDown,
+  Plus,
   ExternalLink,
   X,
 } from "lucide-react";
@@ -22,8 +25,8 @@ import { logoutAction } from "../taslima/actions";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/services", label: "Service Pages", icon: Anchor },
   { href: "/admin/posts", label: "Blog Posts", icon: FileText },
+  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/vault", label: "Vault", icon: Lock },
   { href: "/admin/messages", label: "Messages", icon: Mail },
   { href: "/admin/menus", label: "Menus", icon: MenuIcon },
@@ -34,34 +37,96 @@ const NAV = [
 export default function AdminShell({
   children,
   userEmail,
+  services = [],
 }: {
   children: React.ReactNode;
   userEmail: string;
+  services?: { slug: string; label: string }[];
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [svcOpen, setSvcOpen] = useState(
+    pathname.startsWith("/admin/services"),
+  );
 
   const isActive = (href: string) =>
     href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 
   const initial = userEmail?.[0]?.toUpperCase() ?? "A";
 
-  const nav = (onNavigate?: () => void) =>
-    NAV.map(({ href, label, icon: Icon }) => {
-      const active = isActive(href);
-      return (
-        <Link
-          key={href}
-          href={href}
-          onClick={onNavigate}
-          className={`a-nav__link${active ? " is-active" : ""}`}
-        >
-          <Icon />
-          {label}
-          {active && <ChevronRight className="a-nav__chev" />}
-        </Link>
-      );
-    });
+  const servicesActive = pathname.startsWith("/admin/services");
+
+  const nav = (onNavigate?: () => void) => (
+    <>
+      {NAV.map(({ href, label, icon: Icon }) => {
+        const active = isActive(href);
+        const link = (
+          <Link
+            key={href}
+            href={href}
+            onClick={onNavigate}
+            className={`a-nav__link${active ? " is-active" : ""}`}
+          >
+            <Icon />
+            {label}
+            {active && <ChevronRight className="a-nav__chev" />}
+          </Link>
+        );
+        // Insert the collapsible "Service Pages" group right after Dashboard.
+        if (href === "/admin") {
+          return (
+            <div key="dash+services">
+              {link}
+              <button
+                type="button"
+                className={`a-nav__link a-nav__btn${servicesActive ? " is-active" : ""}`}
+                onClick={() => setSvcOpen((v) => !v)}
+              >
+                <Anchor />
+                Service Pages
+                <ChevronDown
+                  className="a-nav__chev a-nav__chev--rot"
+                  style={{
+                    transform: svcOpen ? "rotate(180deg)" : "none",
+                  }}
+                />
+              </button>
+              {svcOpen && (
+                <div className="a-nav__sub">
+                  <Link
+                    href="/admin/services"
+                    onClick={onNavigate}
+                    className={`a-nav__sublink${pathname === "/admin/services" ? " is-active" : ""}`}
+                  >
+                    All service pages
+                  </Link>
+                  {services.map((s) => (
+                    <Link
+                      key={s.slug}
+                      href={`/admin/services/edit?slug=${encodeURIComponent(s.slug)}`}
+                      onClick={onNavigate}
+                      className="a-nav__sublink"
+                      title={s.label}
+                    >
+                      {s.label}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/admin/services/new"
+                    onClick={onNavigate}
+                    className="a-nav__sublink a-nav__sublink--add"
+                  >
+                    <Plus /> New service page
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
+        }
+        return link;
+      })}
+    </>
+  );
 
   return (
     <div className={`a-root${open ? " is-open" : ""}`}>

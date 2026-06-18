@@ -1,8 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Plus, Pencil, Trash2, Anchor, ExternalLink } from "lucide-react";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Anchor,
+  ExternalLink,
+  Search,
+  CheckCircle2,
+  FileEdit,
+  Languages,
+} from "lucide-react";
 import { useAdminUI } from "@/components/admin/AdminUI";
 
 interface SvcMeta {
@@ -14,11 +24,42 @@ interface SvcMeta {
   titleEn: string;
 }
 
+function Tile({
+  icon,
+  label,
+  value,
+  hint,
+  variant,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number | string;
+  hint?: string;
+  variant?: "blue" | "green" | "amber" | "navy";
+}) {
+  return (
+    <div className="a-tile">
+      <div className="a-tile__top">
+        <span className="a-tile__label">{label}</span>
+        <span
+          className={`a-tile__icon${variant ? ` a-tile__icon--${variant}` : ""}`}
+        >
+          {icon}
+        </span>
+      </div>
+      <div className="a-tile__value">{value}</div>
+      {hint && <div className="a-tile__hint">{hint}</div>}
+    </div>
+  );
+}
+
 export default function AdminServicesPage() {
   const { toast, confirm } = useAdminUI();
   const [items, setItems] = useState<SvcMeta[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [q, setQ] = useState("");
+  const [status, setStatus] = useState<"all" | "published" | "draft">("all");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -36,6 +77,28 @@ export default function AdminServicesPage() {
   useEffect(() => {
     load();
   }, [load]);
+
+  const stats = useMemo(() => {
+    const total = items.length;
+    const published = items.filter((m) => m.published).length;
+    const bilingual = items.filter((m) => (m.navZh || "").trim().length).length;
+    return { total, published, drafts: total - published, bilingual };
+  }, [items]);
+
+  const filtered = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    return items.filter((m) => {
+      if (status === "published" && !m.published) return false;
+      if (status === "draft" && m.published) return false;
+      if (!needle) return true;
+      return (
+        m.navEn.toLowerCase().includes(needle) ||
+        (m.navZh || "").toLowerCase().includes(needle) ||
+        m.slug.toLowerCase().includes(needle) ||
+        (m.titleEn || "").toLowerCase().includes(needle)
+      );
+    });
+  }, [items, q, status]);
 
   const remove = async (m: SvcMeta) => {
     const ok = await confirm({
@@ -70,7 +133,8 @@ export default function AdminServicesPage() {
         <div>
           <h1 className="a-page-head__title">Service Pages</h1>
           <p className="a-page-head__sub">
-            {items.length} pages · shown under the Services menu
+            {stats.total} pages · {stats.published} published ·{" "}
+            {stats.drafts} draft · shown under the Services menu
           </p>
         </div>
         <div className="a-page-head__actions">
@@ -80,22 +144,99 @@ export default function AdminServicesPage() {
         </div>
       </div>
 
+      {/* Stat tiles */}
+      <div className="a-stats">
+        <Tile
+          icon={<Anchor />}
+          variant="blue"
+          label="Total Pages"
+          value={stats.total}
+        />
+        <Tile
+          icon={<CheckCircle2 />}
+          variant="green"
+          label="Published"
+          value={stats.published}
+        />
+        <Tile
+          icon={<FileEdit />}
+          variant="amber"
+          label="Drafts"
+          value={stats.drafts}
+        />
+        <Tile
+          icon={<Languages />}
+          variant="navy"
+          label="With 中文"
+          value={stats.bilingual}
+          hint="bilingual pages"
+        />
+      </div>
+
+      {/* Toolbar: search + status filter */}
+      <div className="a-toolbar" style={{ marginBottom: 18, gap: 10 }}>
+        <div
+          className="a-input-group"
+          style={{ flex: 1, maxWidth: 380, position: "relative" }}
+        >
+          <Search
+            style={{
+              position: "absolute",
+              left: 12,
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 16,
+              height: 16,
+              color: "var(--a-ink-muted)",
+              pointerEvents: "none",
+            }}
+          />
+          <input
+            className="a-input"
+            style={{ paddingLeft: 36 }}
+            placeholder="Search service pages…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
+        <select
+          className="a-select"
+          style={{ width: 170 }}
+          value={status}
+          onChange={(e) =>
+            setStatus(e.target.value as "all" | "published" | "draft")
+          }
+        >
+          <option value="all">All statuses</option>
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
+      </div>
+
       <div className="a-card">
         {loading ? (
           <div className="a-loading">
             <span className="a-spin" />
           </div>
-        ) : items.length === 0 ? (
+        ) : filtered.length === 0 ? (
           <div className="a-empty">
             <Anchor />
-            <div className="a-empty__title">No service pages</div>
-            <div className="a-empty__text">Create your first service page.</div>
-            <Link
-              href="/admin/services/new"
-              className="a-btn a-btn--cyan a-btn--sm"
-            >
-              <Plus /> Create one
-            </Link>
+            <div className="a-empty__title">
+              {items.length === 0 ? "No service pages" : "No matches"}
+            </div>
+            <div className="a-empty__text">
+              {items.length === 0
+                ? "Create your first service page."
+                : "Try a different search or filter."}
+            </div>
+            {items.length === 0 && (
+              <Link
+                href="/admin/services/new"
+                className="a-btn a-btn--cyan a-btn--sm"
+              >
+                <Plus /> Create one
+              </Link>
+            )}
           </div>
         ) : (
           <div className="a-table-wrap">
@@ -110,7 +251,7 @@ export default function AdminServicesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((m) => (
+                {filtered.map((m) => (
                   <tr key={m.slug}>
                     <td>
                       <div className="a-table__title">{m.navEn}</div>

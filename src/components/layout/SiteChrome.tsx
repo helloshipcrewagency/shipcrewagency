@@ -8,12 +8,39 @@ import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 import { FloatingActions } from "./FloatingActions";
 import { ServiceWorkerRegister } from "./ServiceWorkerRegister";
 import { getDict, type Lang } from "@/i18n";
-import type { Dictionary } from "@/i18n/types";
+import type { Dictionary, NavChild, NavItem } from "@/i18n/types";
 import { getNavServices } from "@/lib/services/store";
 import type { ServiceMeta } from "@/lib/services/types";
+import { getHeaderMenu } from "@/lib/menu/store";
+import type { MenuNode } from "@/lib/menu/types";
 import { siteUrl } from "@/lib/seo";
 
 const SITE = siteUrl();
+
+// Convert a custom menu tree into nav items (label chosen per language).
+function toNavChild(n: MenuNode, lang: Lang): NavChild {
+  return {
+    label: lang === "en" ? n.labelEn : n.labelZh || n.labelEn,
+    to: n.url,
+    external: n.external,
+    children: n.children?.length
+      ? n.children.map((c) => toNavChild(c, lang))
+      : undefined,
+  };
+}
+function navFromMenu(menu: MenuNode[], lang: Lang): NavItem[] {
+  return menu.map((n) => {
+    const kids = n.children?.length
+      ? n.children.map((c) => toNavChild(c, lang))
+      : undefined;
+    return {
+      label: lang === "en" ? n.labelEn : n.labelZh || n.labelEn,
+      to: n.url,
+      children: kids,
+      wide: (n.children?.length ?? 0) >= 5,
+    };
+  });
+}
 
 // Replace the Services dropdown (and footer services list) with the live,
 // admin-managed set of service pages, so newly added pages show up in the nav.
@@ -43,8 +70,15 @@ export async function SiteChrome({
   lang: Lang;
   children: ReactNode;
 }) {
-  const services = await getNavServices();
-  const dict = withServiceNav(getDict(lang), lang, services);
+  const [services, menu] = await Promise.all([
+    getNavServices(),
+    getHeaderMenu(),
+  ]);
+  // Footer always reflects the live service list. The header nav uses the
+  // admin-built custom menu when one exists, otherwise the default + services.
+  const base = withServiceNav(getDict(lang), lang, services);
+  const dict: Dictionary =
+    menu && menu.length ? { ...base, nav: navFromMenu(menu, lang) } : base;
   const jsonLd = [
     {
       "@context": "https://schema.org",

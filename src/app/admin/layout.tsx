@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { verifySession } from "@/lib/auth/dal";
 import { AdminUIProvider } from "@/components/admin/AdminUI";
+import { adminListServices } from "@/lib/services/store";
 import AdminShell from "./AdminShell";
 import "./admin.css";
 
@@ -15,10 +16,15 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await verifySession();
+  const services = await adminListServices()
+    .then((list) => list.map((s) => ({ slug: s.slug, label: s.navEn || s.slug })))
+    .catch(() => []);
 
   return (
     <AdminUIProvider>
-      <AdminShell userEmail={session.email}>{children}</AdminShell>
+      <AdminShell userEmail={session.email} services={services}>
+        {children}
+      </AdminShell>
     </AdminUIProvider>
   );
 }
