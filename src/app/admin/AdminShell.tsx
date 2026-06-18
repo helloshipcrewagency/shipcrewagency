@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   FileText,
+  Anchor,
   Lock,
   Mail,
   Menu as MenuIcon,
@@ -21,6 +22,7 @@ import { logoutAction } from "../taslima/actions";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/services", label: "Service Pages", icon: Anchor },
   { href: "/admin/posts", label: "Blog Posts", icon: FileText },
   { href: "/admin/vault", label: "Vault", icon: Lock },
   { href: "/admin/messages", label: "Messages", icon: Mail },
