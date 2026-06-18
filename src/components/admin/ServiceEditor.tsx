@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, Trash2, ExternalLink, Settings2 } from "lucide-react";
 import { useAdminUI } from "@/components/admin/AdminUI";
+import RichEditor from "@/components/admin/RichEditor";
+import { STARTER_EN, STARTER_ZH } from "@/lib/services/starter";
 
 interface Form {
   slug: string;
@@ -53,10 +55,16 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
   const isEdit = Boolean(slug);
   const router = useRouter();
   const { toast, confirm } = useAdminUI();
-  const [form, setForm] = useState<Form>(EMPTY);
+  // New pages start from the friendly bilingual starter so a non-technical
+  // author has something to edit straight away; edit pages load from the DB.
+  const [form, setForm] = useState<Form>(() =>
+    isEdit ? EMPTY : { ...EMPTY, bodyEn: STARTER_EN, bodyZh: STARTER_ZH },
+  );
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  // Bumped when content is (re)seeded so the visual editors re-read `value`.
+  const [editorKey, setEditorKey] = useState(0);
   const slugTouched = useRef(false);
 
   useEffect(() => {
@@ -89,6 +97,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
           scriptEn: d.scriptEn ?? "",
           scriptZh: d.scriptZh ?? "",
         });
+        setEditorKey((k) => k + 1);
         setLoading(false);
       })
       .catch(() => {
@@ -113,6 +122,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
   const save = async () => {
     if (!form.navEn.trim()) {
       setError("English menu label is required.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     const slugVal = (form.slug.trim() || slugify(form.navEn)).trim();
@@ -195,14 +205,24 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
         </div>
         <div className="a-page-head__actions">
           {isEdit && (
-            <button
-              type="button"
-              className="a-btn a-btn--ghost"
-              onClick={remove}
-              disabled={saving}
-            >
-              <Trash2 /> Delete
-            </button>
+            <>
+              <a
+                href={`/services/${form.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="a-btn a-btn--ghost"
+              >
+                <ExternalLink /> View page
+              </a>
+              <button
+                type="button"
+                className="a-btn a-btn--ghost"
+                onClick={remove}
+                disabled={saving}
+              >
+                <Trash2 /> Delete
+              </button>
+            </>
           )}
           <button
             type="button"
@@ -256,8 +276,8 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
             />
             <div className="a-hint">
               {isEdit
-                ? "The page URL — fixed once created."
-                : "Lives at /services/<slug>. Auto-filled from the English label."}
+                ? "The page web address — fixed once created."
+                : "The page lives at /services/<slug>. Filled in automatically from the English menu label."}
             </div>
           </div>
           <div className="a-field">
@@ -268,7 +288,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
               value={form.order}
               onChange={(e) => set("order", Number(e.target.value) || 0)}
             />
-            <div className="a-hint">Lower numbers appear first.</div>
+            <div className="a-hint">Lower numbers appear first in the menu.</div>
           </div>
         </div>
         <label className="a-checkbox">
@@ -283,7 +303,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
 
       {/* English */}
       <div className="a-card" style={{ marginBottom: 18 }}>
-        <div className="a-section-title">English</div>
+        <div className="a-section-title">English page</div>
         <div
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}
         >
@@ -295,51 +315,46 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
               onChange={(e) => onNavEn(e.target.value)}
               placeholder="Offshore Crew Manning"
             />
+            <div className="a-hint">The wording shown in the Services menu.</div>
           </div>
           <div className="a-field">
-            <label className="a-label">SEO title</label>
+            <label className="a-label">Browser tab / Google title</label>
             <input
               className="a-input"
               value={form.titleEn}
               onChange={(e) => set("titleEn", e.target.value)}
-              placeholder="… | Ship Crew Agency"
+              placeholder="Offshore Crew Manning | Ship Crew Agency"
             />
           </div>
         </div>
         <div className="a-field">
-          <label className="a-label">SEO description</label>
+          <label className="a-label">Search description</label>
           <textarea
             className="a-textarea"
             style={{ minHeight: 64 }}
             value={form.metaDescEn}
             onChange={(e) => set("metaDescEn", e.target.value)}
-          />
-        </div>
-        <div className="a-field">
-          <label className="a-label">Page body — HTML</label>
-          <textarea
-            className="a-textarea a-textarea--mono"
-            style={{ minHeight: 340 }}
-            spellCheck={false}
-            value={form.bodyEn}
-            onChange={(e) => set("bodyEn", e.target.value)}
+            placeholder="One or two sentences shown under the page title in Google search results."
           />
         </div>
         <div className="a-field" style={{ marginBottom: 0 }}>
-          <label className="a-label">Page script — JavaScript (optional)</label>
-          <textarea
-            className="a-textarea a-textarea--mono"
-            style={{ minHeight: 120 }}
-            spellCheck={false}
-            value={form.scriptEn}
-            onChange={(e) => set("scriptEn", e.target.value)}
+          <label className="a-label">Page content</label>
+          <div className="a-hint" style={{ margin: "0 0 8px" }}>
+            Write it like a document — add headings, paragraphs, lists and
+            images. It styles itself to match the site automatically.
+          </div>
+          <RichEditor
+            value={form.bodyEn}
+            onChange={(v) => set("bodyEn", v)}
+            resetKey={`en-${editorKey}`}
+            placeholder="Write the English page content…"
           />
         </div>
       </div>
 
       {/* Chinese */}
       <div className="a-card" style={{ marginBottom: 18 }}>
-        <div className="a-section-title">中文 (Chinese)</div>
+        <div className="a-section-title">中文 (Chinese) page</div>
         <div
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}
         >
@@ -353,7 +368,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
             />
           </div>
           <div className="a-field">
-            <label className="a-label">SEO title</label>
+            <label className="a-label">Browser tab / Google title</label>
             <input
               className="a-input"
               value={form.titleZh}
@@ -362,7 +377,7 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
           </div>
         </div>
         <div className="a-field">
-          <label className="a-label">SEO description</label>
+          <label className="a-label">Search description</label>
           <textarea
             className="a-textarea"
             style={{ minHeight: 64 }}
@@ -370,43 +385,68 @@ export default function ServiceEditor({ slug }: { slug?: string }) {
             onChange={(e) => set("metaDescZh", e.target.value)}
           />
         </div>
-        <div className="a-field">
-          <label className="a-label">Page body — HTML</label>
-          <textarea
-            className="a-textarea a-textarea--mono"
-            style={{ minHeight: 340 }}
-            spellCheck={false}
-            value={form.bodyZh}
-            onChange={(e) => set("bodyZh", e.target.value)}
-          />
-        </div>
         <div className="a-field" style={{ marginBottom: 0 }}>
-          <label className="a-label">Page script — JavaScript (optional)</label>
-          <textarea
-            className="a-textarea a-textarea--mono"
-            style={{ minHeight: 120 }}
-            spellCheck={false}
-            value={form.scriptZh}
-            onChange={(e) => set("scriptZh", e.target.value)}
+          <label className="a-label">Page content (中文)</label>
+          <div className="a-hint" style={{ margin: "0 0 8px" }}>
+            The Chinese version of the page, shown to visitors on /zh.
+          </div>
+          <RichEditor
+            value={form.bodyZh}
+            onChange={(v) => set("bodyZh", v)}
+            resetKey={`zh-${editorKey}`}
+            placeholder="请输入中文页面内容…"
           />
         </div>
       </div>
 
-      {/* Shared CSS */}
-      <div className="a-card" style={{ marginBottom: 18 }}>
-        <div className="a-section-title">
-          Stylesheet — CSS (shared by both languages)
+      {/* Advanced — developers only */}
+      <details className="a-advanced">
+        <summary className="a-advanced__summary">
+          <Settings2 size={15} />
+          Advanced — custom code (for developers only, safe to ignore)
+        </summary>
+        <div className="a-advanced__body">
+          <p className="a-advanced__note">
+            You don’t need anything here to build a great page — the content
+            above already styles itself. These fields let a developer add custom
+            CSS or scripts for special layouts.
+          </p>
+          <div className="a-field">
+            <label className="a-label">Custom CSS (shared by both languages)</label>
+            <textarea
+              className="a-textarea a-textarea--mono"
+              style={{ minHeight: 220 }}
+              spellCheck={false}
+              value={form.css}
+              onChange={(e) => set("css", e.target.value)}
+              placeholder="/* Leave empty to use the site's automatic page styling. */"
+            />
+            <div className="a-hint">
+              Leave this empty and the page uses the site’s built-in styling.
+            </div>
+          </div>
+          <div className="a-field">
+            <label className="a-label">Custom script — English (optional)</label>
+            <textarea
+              className="a-textarea a-textarea--mono"
+              style={{ minHeight: 100 }}
+              spellCheck={false}
+              value={form.scriptEn}
+              onChange={(e) => set("scriptEn", e.target.value)}
+            />
+          </div>
+          <div className="a-field" style={{ marginBottom: 0 }}>
+            <label className="a-label">Custom script — 中文 (optional)</label>
+            <textarea
+              className="a-textarea a-textarea--mono"
+              style={{ minHeight: 100 }}
+              spellCheck={false}
+              value={form.scriptZh}
+              onChange={(e) => set("scriptZh", e.target.value)}
+            />
+          </div>
         </div>
-        <div className="a-field" style={{ marginBottom: 0 }}>
-          <textarea
-            className="a-textarea a-textarea--mono"
-            style={{ minHeight: 260 }}
-            spellCheck={false}
-            value={form.css}
-            onChange={(e) => set("css", e.target.value)}
-          />
-        </div>
-      </div>
+      </details>
     </div>
   );
 }

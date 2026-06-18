@@ -2234,38 +2234,78 @@
 }
 .an-guide__intro {
   font-size: 13.5px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--a-ink-soft);
-  margin: 16px 0 8px;
+  margin: 16px 0 4px;
 }
-.an-guide__steps {
-  list-style: none;
-  padding: 0;
-  margin: 8px 0 0;
-  counter-reset: none;
-}
-.an-guide__steps > li {
+.an-guide__part {
   padding: 16px 0;
   border-top: 1px solid var(--a-border-soft);
 }
-.an-guide__steps h4 {
-  font-size: 14px;
+.an-guide__part-title {
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--a-navy-800);
-  margin: 0 0 6px;
+  margin: 0 0 12px;
 }
-.an-guide__steps p,
-.an-guide__steps li {
+.an-guide__steps {
+  list-style: none;
+  counter-reset: an-step;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.an-guide__steps > li {
+  counter-increment: an-step;
+  position: relative;
+  padding-left: 38px;
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--a-ink-soft);
+  min-height: 26px;
+  padding-top: 2px;
 }
-.an-guide__steps ul {
-  margin: 8px 0 0;
+.an-guide__steps > li::before {
+  content: counter(an-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--a-navy-800);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.an-guide__notes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.an-guide__notes > li {
+  position: relative;
   padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--a-ink-soft);
 }
-.an-guide__steps ul li {
-  margin-bottom: 7px;
+.an-guide__notes > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--a-cyan-400);
 }
 .an-guide a {
   color: var(--a-blue-600);
@@ -2306,4 +2346,53 @@
   border-radius: var(--a-radius);
   font-size: 12.5px !important;
   color: var(--a-ink-soft);
+}
+
+/* ===== Editor "Advanced" (developer) section ===== */
+.a-advanced {
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-radius: var(--a-radius-lg);
+  box-shadow: var(--a-shadow-sm);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.a-advanced__summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--a-ink-soft);
+  cursor: pointer;
+  list-style: none;
+}
+.a-advanced__summary::-webkit-details-marker {
+  display: none;
+}
+.a-advanced__summary::after {
+  content: "▸";
+  margin-left: auto;
+  color: var(--a-ink-muted);
+  transition: transform 0.15s ease;
+}
+.a-advanced[open] .a-advanced__summary::after {
+  transform: rotate(90deg);
+}
+.a-advanced__summary svg {
+  color: var(--a-ink-muted);
+}
+.a-advanced__body {
+  padding: 4px 18px 18px;
+  border-top: 1px solid var(--a-border-soft);
+}
+.a-advanced__note {
+  font-size: 12.5px;
+  color: var(--a-ink-soft);
+  line-height: 1.55;
+  margin: 14px 0 16px;
+  padding: 11px 14px;
+  background: var(--a-field);
+  border-radius: var(--a-radius);
 }
