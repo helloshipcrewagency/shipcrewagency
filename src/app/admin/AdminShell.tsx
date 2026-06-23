@@ -12,7 +12,6 @@ import {
   Menu as MenuIcon,
   PanelsTopLeft,
   Code2,
-  BarChart3,
   LogOut,
   ChevronRight,
   ChevronDown,
@@ -26,7 +25,6 @@ import { logoutAction } from "../taslima/actions";
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/posts", label: "Blog Posts", icon: FileText },
-  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/vault", label: "Vault", icon: Lock },
   { href: "/admin/messages", label: "Messages", icon: Mail },
   { href: "/admin/menus", label: "Menus", icon: MenuIcon },
