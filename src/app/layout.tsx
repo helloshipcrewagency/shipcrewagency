@@ -66,6 +66,12 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${display.variable} ${body.variable}`}>
       <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Ship Crew Agency — Maritime Knowledge Hub"
+          href="/feed.xml"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html:
