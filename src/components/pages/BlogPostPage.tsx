@@ -14,21 +14,28 @@ import { ShareBar } from "@/components/blog/ShareBar";
 
 function sanitizeBody(html: string): string {
   return sanitizeHtml(html, {
+    // No <h1> (the post title is the page's only H1), and no <div>/<span>:
+    // pasted content from Google Docs / AI chats wraps text in those with
+    // foreign classes (and even nests <p> inside <h1>), which renders huge.
+    // Discarding them unwraps the text into clean, correctly-sized paragraphs.
     allowedTags: [
-      "h1", "h2", "h3", "h4", "h5", "h6",
+      "h2", "h3", "h4", "h5", "h6",
       "p", "ul", "ol", "li",
       "strong", "em", "b", "i", "u", "s", "del", "sup", "sub", "mark", "small",
       "a", "blockquote", "br", "hr",
       "table", "thead", "tbody", "tfoot", "tr", "th", "td", "caption", "colgroup", "col",
-      "img", "figure", "figcaption",
-      "div", "span", "code", "pre",
+      "img", "figure", "figcaption", "code", "pre",
     ],
+    // Only the CTA-button class is kept; every other class/id/style is dropped
+    // so the post adopts the site's own typography consistently.
     allowedAttributes: {
       a: ["href", "title", "target", "rel", "class"],
       img: ["src", "alt", "title", "width", "height", "loading"],
       th: ["colspan", "rowspan", "scope"],
       td: ["colspan", "rowspan"],
-      "*": ["class", "id"],
+    },
+    allowedClasses: {
+      a: ["post-cta", "post-cta--outline"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
     // Open external links safely in a new tab.
