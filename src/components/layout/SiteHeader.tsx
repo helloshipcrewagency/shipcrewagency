@@ -191,10 +191,21 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               <div className="nav__item" key={item.label}>
                 {item.children ? (
                   <>
-                    <span className="nav__link" role="button" tabIndex={0}>
-                      {item.label}
-                      <Icon name="chevron-down" />
-                    </span>
+                    {item.to ? (
+                      <LocalizedLink
+                        lang={lang}
+                        to={item.to}
+                        className="nav__link"
+                      >
+                        {item.label}
+                        <Icon name="chevron-down" />
+                      </LocalizedLink>
+                    ) : (
+                      <span className="nav__link" role="button" tabIndex={0}>
+                        {item.label}
+                        <Icon name="chevron-down" />
+                      </span>
+                    )}
                     <div
                       className={cn("dropdown", item.wide && "dropdown--wide")}
                     >
@@ -242,15 +253,31 @@ export function SiteHeader({ lang, dict }: { lang: Lang; dict: Dictionary }) {
         {nav.map((item) =>
           item.children ? (
             <div className="mobile-nav__item" key={item.label}>
-              <button
-                className="mobile-nav__link"
-                onClick={() =>
-                  setOpenSub((s) => (s === item.label ? null : item.label))
-                }
-              >
-                {item.label}
-                <span>{openSub === item.label ? "−" : "+"}</span>
-              </button>
+              <div className="mobile-nav__parent">
+                {item.to ? (
+                  <Link
+                    href={buildHref(lang, item.to)}
+                    className="mobile-nav__link mobile-nav__link--grow"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="mobile-nav__link mobile-nav__link--grow">
+                    {item.label}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  className="mobile-nav__toggle"
+                  aria-label={`${item.label} submenu`}
+                  aria-expanded={openSub === item.label}
+                  onClick={() =>
+                    setOpenSub((s) => (s === item.label ? null : item.label))
+                  }
+                >
+                  {openSub === item.label ? "−" : "+"}
+                </button>
+              </div>
               <div
                 className={cn(
                   "mobile-nav__sub",
