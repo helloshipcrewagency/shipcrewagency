@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { RefreshCw } from "lucide-react";
+import { useAdminUI } from "./AdminUI";
 
 export function IndexScanButton({ hasData }: { hasData: boolean }) {
   const router = useRouter();
+  const { toast } = useAdminUI();
   const [running, setRunning] = useState(false);
 
   const run = async () => {
@@ -14,12 +16,14 @@ export function IndexScanButton({ hasData }: { hasData: boolean }) {
       const res = await fetch("/api/admin/indexing?action=scan", {
         method: "POST",
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Scan failed (${res.status})`);
+      toast.success("Index scan complete.");
       router.refresh();
-    } catch {
-      /* no-op */
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Scan failed");
     } finally {
-      setTimeout(() => setRunning(false), 800);
+      setTimeout(() => setRunning(false), 600);
     }
   };
 

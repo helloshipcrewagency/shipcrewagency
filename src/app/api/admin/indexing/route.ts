@@ -35,15 +35,22 @@ export async function POST(req: NextRequest) {
   const action = new URL(req.url).searchParams.get("action") ?? "scan";
 
   if (action === "scan") {
-    const report = await runIndexScan();
-    if (hasSupabaseConfig()) {
-      try {
-        await writeIndexReport(report);
-      } catch {
-        /* still return result */
+    try {
+      const report = await runIndexScan();
+      if (hasSupabaseConfig()) {
+        try {
+          await writeIndexReport(report);
+        } catch {
+          /* still return result */
+        }
       }
+      return NextResponse.json({ report });
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error ? e.message : "Scan failed" },
+        { status: 500 },
+      );
     }
-    return NextResponse.json({ report });
   }
 
   if (action === "indexnow") {

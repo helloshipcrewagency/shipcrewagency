@@ -58,6 +58,19 @@ function headingId(text: string): string {
   );
 }
 
+// Some posts (often pasted or AI-generated) wrap whole paragraphs in heading
+// tags, which makes them render huge and pollutes the table of contents. Any
+// h2–h4 whose text is clearly a sentence (long) is turned back into a paragraph.
+function normalizeHeadings(html: string): string {
+  return html.replace(
+    /<(h[2-4])(\s[^>]*)?>([\s\S]*?)<\/\1>/gi,
+    (match, _tag: string, _attrs: string | undefined, inner: string) => {
+      const text = inner.replace(/<[^>]+>/g, "").trim();
+      return text.length > 90 ? `<p>${inner}</p>` : match;
+    },
+  );
+}
+
 // Inject ids onto h2/h3 and collect a table-of-contents list.
 function buildToc(html: string): {
   html: string;
@@ -69,7 +82,7 @@ function buildToc(html: string): {
     /<(h2|h3)(\s[^>]*)?>([\s\S]*?)<\/\1>/gi,
     (match, tag: string, attrs: string | undefined, inner: string) => {
       const text = inner.replace(/<[^>]+>/g, "").trim();
-      if (!text) return match;
+      if (!text || text.length > 90) return match;
       const base = headingId(text);
       let id = base;
       let n = 2;
@@ -98,7 +111,9 @@ export async function BlogPostPage({
 
   const t = getDict(lang);
   const related = await getRelatedPosts(lang, slug, 4);
-  const { html: body, toc } = buildToc(sanitizeBody(post.content));
+  const { html: body, toc } = buildToc(
+    normalizeHeadings(sanitizeBody(post.content)),
+  );
   const dateLabel = formatDate(post.published_at || post.created_at, lang);
   const shareUrl = siteUrl() + href(lang, `blog/${post.slug}`);
 
@@ -182,10 +197,10 @@ export async function BlogPostPage({
               </div>
 
               {toc.length >= 3 && (
-                <nav className="article__toc" aria-label={t.blog.tableOfContents}>
-                  <div className="article__toc-title">
+                <details className="article__toc">
+                  <summary className="article__toc-title">
                     {t.blog.tableOfContents}
-                  </div>
+                  </summary>
                   <ol>
                     {toc.map((h) => (
                       <li
@@ -196,7 +211,7 @@ export async function BlogPostPage({
                       </li>
                     ))}
                   </ol>
-                </nav>
+                </details>
               )}
 
               <div dangerouslySetInnerHTML={{ __html: body }} />

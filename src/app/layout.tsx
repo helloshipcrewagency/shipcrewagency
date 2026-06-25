@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { siteUrl } from "@/lib/seo";
 import "./globals.css";
 import "./sections.css";
@@ -9,17 +9,17 @@ import "./theme.css";
 const SITE_URL = siteUrl();
 
 // Self-hosted, optimized fonts (no render-blocking external CSS).
-const display = Cormorant_Garamond({
+// Headings: Plus Jakarta Sans (modern, confident). Body: Inter (clean, readable).
+const display = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display-src",
   display: "swap",
   preload: true,
 });
-const body = DM_Sans({
+const body = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body-src",
   display: "swap",
   preload: true,

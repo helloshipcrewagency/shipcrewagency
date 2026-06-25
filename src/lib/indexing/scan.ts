@@ -2,7 +2,7 @@ import "server-only";
 import crypto from "node:crypto";
 import { siteUrl } from "@/lib/seo";
 import { getSupabaseAdmin, hasSupabaseConfig } from "@/lib/supabase/server";
-import { gscInspectUrl, hasGscConfig } from "@/lib/analytics/google";
+import { gscQuery, hasGscConfig } from "@/lib/analytics/google";
 
 export type IndexPage = { url: string; state: string; indexed: boolean };
 export type IndexReport = {
@@ -33,57 +33,59 @@ async function sitemapUrls(): Promise<string[]> {
   return [base];
 }
 
-async function mapLimit<T, R>(
-  items: T[],
-  limit: number,
-  fn: (item: T, index: number) => Promise<R>,
-): Promise<R[]> {
-  const out: R[] = [];
-  let i = 0;
-  await Promise.all(
-    Array.from({ length: Math.min(limit, items.length) }, async () => {
-      while (i < items.length) {
-        const idx = i++;
-        out[idx] = await fn(items[idx], idx);
-      }
-    }),
-  );
-  return out;
+function pathOf(u: string): string {
+  try {
+    return new URL(u).pathname || "/";
+  } catch {
+    return u;
+  }
 }
 
-export async function runIndexScan(maxPages = 120): Promise<IndexReport> {
+function ymd(daysAgo: number): string {
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() - daysAgo);
+  return d.toISOString().slice(0, 10);
+}
+
+// Index status is derived from Search Console's Search Analytics (one fast
+// request — the same API the Analytics dashboard uses). A page that has shown
+// up in Google search results over the last 90 days is indexed. This avoids the
+// slow, owner-only URL Inspection API (one request per page) that timed out.
+export async function runIndexScan(maxPages = 200): Promise<IndexReport> {
   const urls = (await sitemapUrls()).slice(0, maxPages);
   const gsc = hasGscConfig();
-  let pages: IndexPage[];
 
+  const seen = new Set<string>();
   if (gsc) {
-    pages = await mapLimit(urls, 4, async (u) => {
-      const r = await gscInspectUrl(u);
-      const path = (() => {
-        try {
-          return new URL(u).pathname || "/";
-        } catch {
-          return u;
-        }
-      })();
-      return {
-        url: path,
-        state: r?.coverageState ?? "Unknown",
-        indexed: r?.verdict === "PASS",
-      };
-    });
-  } else {
-    pages = urls.map((u) => {
-      const path = (() => {
-        try {
-          return new URL(u).pathname || "/";
-        } catch {
-          return u;
-        }
-      })();
-      return { url: path, state: "Unknown", indexed: false };
-    });
+    try {
+      const rows = await gscQuery({
+        startDate: ymd(90),
+        endDate: ymd(1),
+        dimensions: ["page"],
+        rowLimit: 25000,
+      });
+      for (const r of rows) {
+        const p = r.keys?.[0];
+        if (p) seen.add(pathOf(p));
+      }
+    } catch {
+      /* leave seen empty — pages fall back to "unknown" */
+    }
   }
+
+  const hasData = seen.size > 0;
+  const pages: IndexPage[] = urls.map((u) => {
+    const path = pathOf(u);
+    const indexed = seen.has(path);
+    const state = !gsc
+      ? "Unknown — connect Search Console"
+      : indexed
+        ? "Indexed (appears in search)"
+        : hasData
+          ? "Not appearing in search yet"
+          : "Unknown — no Search Console data";
+    return { url: path, state, indexed };
+  });
 
   const indexed = pages.filter((p) => p.indexed).length;
   const total = pages.length;

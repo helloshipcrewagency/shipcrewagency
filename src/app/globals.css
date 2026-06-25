@@ -27,8 +27,8 @@
   --text-secondary: #33514e;
   --text-muted: #5f7b77;
   --pure-white: #ffffff; /* never flips — text/icons on dark sections */
-  --font-display: var(--font-display-src), Georgia, "Songti SC", "Noto Serif SC",
-    "Noto Sans SC", serif;
+  --font-display: var(--font-display-src), "Segoe UI", system-ui, -apple-system,
+    "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --font-body: var(--font-body-src), system-ui, -apple-system, "PingFang SC",
     "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --radius: 9px;
