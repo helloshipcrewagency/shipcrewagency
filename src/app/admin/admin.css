@@ -2287,6 +2287,7 @@
 /* ---- chart ---- */
 .an-chart {
   margin-bottom: 20px;
+  padding: 22px 24px;
 }
 .an-chart__head {
   display: flex;
@@ -2414,6 +2415,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   align-items: start;
+}
+.an-list-card {
+  padding: 22px 24px;
 }
 .an-list-card__head {
   display: flex;
