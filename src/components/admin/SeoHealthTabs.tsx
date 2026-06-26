@@ -148,7 +148,7 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
           {topIssues.length > 0 && (
             <>
               <h3 className="sht-h">Top Issues</h3>
-              <div className="a-card">
+              <div className="a-card sht-card">
                 <div className="sh-issues">
                   {topIssues.slice(0, 12).map((it) => (
                     <div className="sh-issue" key={it.label}>
@@ -171,7 +171,7 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
       )}
 
       {tab === "pages" && (
-        <div className="a-card">
+        <div className="a-card sht-card">
           <div className="sht-search">
             <Search size={15} />
             <input
@@ -226,7 +226,7 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
       )}
 
       {tab === "global" && (
-        <div className="a-card">
+        <div className="a-card sht-card">
           {globals.length === 0 && (
             <div className="an-nodata">
               Run a fresh scan to see the site-wide checks.
