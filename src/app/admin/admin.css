@@ -2236,9 +2236,19 @@
 /* ---- stat cards ---- */
 .an-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 20px;
+}
+@media (max-width: 1080px) {
+  .an-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .an-stats {
+    grid-template-columns: 1fr;
+  }
 }
 .an-stat {
   display: flex;
@@ -2433,6 +2443,27 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  max-height: 360px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--a-success) var(--a-field);
+}
+.an-list::-webkit-scrollbar,
+.ix-list::-webkit-scrollbar,
+.sh-pages::-webkit-scrollbar {
+  width: 8px;
+}
+.an-list::-webkit-scrollbar-track,
+.ix-list::-webkit-scrollbar-track,
+.sh-pages::-webkit-scrollbar-track {
+  background: var(--a-field);
+  border-radius: 8px;
+}
+.an-list::-webkit-scrollbar-thumb,
+.ix-list::-webkit-scrollbar-thumb,
+.sh-pages::-webkit-scrollbar-thumb {
+  background: var(--a-success);
+  border-radius: 8px;
 }
 .an-list__row {
   display: flex;
@@ -2760,6 +2791,10 @@
 .sh-pages {
   display: flex;
   flex-direction: column;
+  max-height: 420px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--a-success) var(--a-field);
 }
 .sh-page {
   display: flex;
@@ -2919,6 +2954,10 @@
 .ix-list {
   display: flex;
   flex-direction: column;
+  max-height: 360px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--a-success) var(--a-field);
 }
 .ix-row {
   display: flex;
