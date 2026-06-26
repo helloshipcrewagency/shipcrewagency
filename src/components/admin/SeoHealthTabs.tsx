@@ -47,23 +47,45 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [asc, setAsc] = useState(true);
 
+  // Tolerate audits saved before these fields existed (old data has no
+  // globals / per-page size+severity counts). They fill in on the next scan.
+  const globals = audit.globals ?? [];
+  const categories = audit.categories ?? [];
+  const topIssues = audit.topIssues ?? [];
+
   const pages = useMemo(() => {
+    const norm = (audit.pages ?? []).map((p) => ({
+      url: p.url,
+      title: p.title ?? "",
+      ok: p.ok,
+      score: p.score ?? 0,
+      kb: p.kb ?? 0,
+      critical:
+        p.critical ??
+        p.issues?.filter((i) => i.severity === "critical").length ??
+        0,
+      warn:
+        p.warn ??
+        p.issues?.filter((i) => i.severity === "warning").length ??
+        0,
+      info:
+        p.info ?? p.issues?.filter((i) => i.severity === "info").length ?? 0,
+    }));
     const term = q.trim().toLowerCase();
     const filtered = term
-      ? audit.pages.filter(
+      ? norm.filter(
           (p) =>
             p.url.toLowerCase().includes(term) ||
             p.title.toLowerCase().includes(term),
         )
-      : audit.pages;
-    const sorted = [...filtered].sort((a, b) => {
-      const av = sortKey === "url" ? a.url : a[sortKey];
-      const bv = sortKey === "url" ? b.url : b[sortKey];
+      : norm;
+    return [...filtered].sort((a, b) => {
+      const av = sortKey === "url" ? a.url : (a[sortKey] as number);
+      const bv = sortKey === "url" ? b.url : (b[sortKey] as number);
       if (av < bv) return asc ? -1 : 1;
       if (av > bv) return asc ? 1 : -1;
       return 0;
     });
-    return sorted;
   }, [audit.pages, q, sortKey, asc]);
 
   const sort = (key: SortKey) => {
@@ -92,10 +114,10 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
           Overview
         </button>
         <button type="button" className={`sht-tab${tab === "pages" ? " is-active" : ""}`} onClick={() => setTab("pages")}>
-          Pages ({audit.pages.length})
+          Pages ({audit.pages?.length ?? 0})
         </button>
         <button type="button" className={`sht-tab${tab === "global" ? " is-active" : ""}`} onClick={() => setTab("global")}>
-          Global Checks ({audit.globals.length})
+          Global Checks ({globals.length})
         </button>
       </div>
 
@@ -103,7 +125,7 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
         <>
           <h3 className="sht-h">Category Breakdown</h3>
           <div className="sh-cats">
-            {audit.categories.map((c) => (
+            {categories.map((c) => (
               <div className="a-card sh-cat" key={c.key}>
                 <div className="sh-cat__top">
                   <span className="sh-cat__label">
@@ -123,12 +145,12 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
             ))}
           </div>
 
-          {audit.topIssues.length > 0 && (
+          {topIssues.length > 0 && (
             <>
               <h3 className="sht-h">Top Issues</h3>
               <div className="a-card">
                 <div className="sh-issues">
-                  {audit.topIssues.slice(0, 12).map((it) => (
+                  {topIssues.slice(0, 12).map((it) => (
                     <div className="sh-issue" key={it.label}>
                       {sevIcon(it.severity)}
                       <div className="sh-issue__body">
@@ -205,8 +227,13 @@ export function SeoHealthTabs({ audit }: { audit: SeoAudit }) {
 
       {tab === "global" && (
         <div className="a-card">
+          {globals.length === 0 && (
+            <div className="an-nodata">
+              Run a fresh scan to see the site-wide checks.
+            </div>
+          )}
           <div className="sht-global">
-            {audit.globals.map((g) => (
+            {globals.map((g) => (
               <div className="sht-gcheck" key={g.name}>
                 {g.passed ? (
                   <CheckCircle2 size={18} className="sh-sev--passed" />
