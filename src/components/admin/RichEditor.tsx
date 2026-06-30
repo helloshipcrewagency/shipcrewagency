@@ -664,27 +664,30 @@ export default function RichEditor({
           <Btn onClick={insertCta} title="Insert CTA button (WhatsApp / phone / link)">
             <MousePointerClick />
           </Btn>
-          <Divider />
-          <button
-            type="button"
-            onMouseDown={(e) => {
-              e.preventDefault();
-              toggleViewMode();
-            }}
-            title={viewMode === "visual" ? "Edit raw HTML" : "Back to visual editor"}
-            className={`a-editor__toggle${viewMode === "html" ? " is-on" : ""}`}
-          >
-            {viewMode === "visual" ? (
-              <>
-                <FileCode2 /> HTML
-              </>
-            ) : (
-              <>
-                <Eye /> Visual
-              </>
-            )}
-          </button>
         </div>
+
+        {/* Toggle lives OUTSIDE the formatting group so it stays clickable
+            even while that group is disabled in HTML (raw) mode. */}
+        <Divider />
+        <button
+          type="button"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleViewMode();
+          }}
+          title={viewMode === "visual" ? "Edit raw HTML" : "Back to visual editor"}
+          className={`a-editor__toggle${viewMode === "html" ? " is-on" : ""}`}
+        >
+          {viewMode === "visual" ? (
+            <>
+              <FileCode2 /> HTML
+            </>
+          ) : (
+            <>
+              <Eye /> Visual
+            </>
+          )}
+        </button>
       </div>
 
       {viewMode === "html" ? (
