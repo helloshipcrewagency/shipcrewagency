@@ -3105,6 +3105,7 @@
   border: 2px solid var(--a-field);
 }
 .ix-table {
+  width: 100%;
   table-layout: fixed;
 }
 .ix-table thead th {
@@ -3115,10 +3116,10 @@
 }
 .ix-table th.ix-th-num,
 .ix-table td.ix-td-num {
-  width: 38px;
+  width: 40px;
   text-align: center;
   padding-left: 12px;
-  padding-right: 6px;
+  padding-right: 4px;
 }
 .ix-table td.ix-td-num {
   font-size: 12px;
@@ -3126,18 +3127,23 @@
   color: var(--a-muted);
   font-variant-numeric: tabular-nums;
 }
-.ix-table th:nth-child(3),
-.ix-table td:nth-child(3) {
-  width: 1%;
-  white-space: nowrap;
+/* Status + Action get fixed columns so they always show; the compact status
+   badge keeps its full text in a tooltip. */
+.ix-table th.ix-col-status,
+.ix-table td.ix-col-status {
+  width: 122px;
 }
-.ix-table th:last-child,
-.ix-table td:last-child {
-  width: 1%;
-  white-space: nowrap;
+.ix-table th.ix-col-act,
+.ix-table td.ix-col-act {
+  width: 158px;
 }
-.ix-table .ix-row__url {
+/* URL takes whatever width is left and truncates with an ellipsis. */
+.ix-table td.ix-url {
+  overflow: hidden;
+}
+.ix-table td.ix-url .ix-row__url {
   max-width: 100%;
+  min-width: 0;
 }
 .ix-table .ix-row__act {
   justify-content: flex-end;

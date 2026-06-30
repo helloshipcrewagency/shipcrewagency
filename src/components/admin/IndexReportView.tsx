@@ -264,9 +264,9 @@ function PageList({
             <thead>
               <tr>
                 <th className="ix-th-num">#</th>
-                <th>URL</th>
-                <th>Status</th>
-                <th className="a-th-right">Action</th>
+                <th className="ix-url">URL</th>
+                <th className="ix-col-status">Status</th>
+                <th className="a-th-right ix-col-act">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -275,7 +275,7 @@ function PageList({
                 return (
                   <tr key={p.url}>
                     <td className="ix-td-num">{i + 1}</td>
-                    <td>
+                    <td className="ix-url">
                       <a
                         className="ix-row__url"
                         href={`${origin}${p.url}`}
@@ -287,12 +287,15 @@ function PageList({
                         <ExternalLink size={12} />
                       </a>
                     </td>
-                    <td>
-                      <span className={`ix-row__state ix-row__state--${tone}`}>
-                        {p.state}
+                    <td className="ix-col-status">
+                      <span
+                        className={`ix-row__state ix-row__state--${tone}`}
+                        title={p.state}
+                      >
+                        {tone === "good" ? "Indexed" : "Not indexed"}
                       </span>
                     </td>
-                    <td className="a-th-right">
+                    <td className="a-th-right ix-col-act">
                       <div className="ix-row__act">
                         {tone === "bad" && (
                           <a
